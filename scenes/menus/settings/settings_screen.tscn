@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
 
 [node name="SettingsScreen" type="Control" node_paths=PackedStringArray("language_option", "text_size_option", "reduced_motion_toggle", "back_button")]
+metadata/automation_id = "screen.settings"
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,6 +49,7 @@ size_flags_horizontal = 3
 text = "SETTINGS_LANGUAGE"
 
 [node name="LanguageOption" type="OptionButton" parent="Center/Panel/Content/Grid"]
+metadata/automation_id = "settings.language"
 custom_minimum_size = Vector2(260, 52)
 layout_mode = 2
 
@@ -57,6 +59,7 @@ size_flags_horizontal = 3
 text = "SETTINGS_TEXT_SIZE"
 
 [node name="TextSizeOption" type="OptionButton" parent="Center/Panel/Content/Grid"]
+metadata/automation_id = "settings.text_size"
 custom_minimum_size = Vector2(260, 52)
 layout_mode = 2
 
@@ -67,6 +70,7 @@ text = "SETTINGS_REDUCED_MOTION"
 autowrap_mode = 3
 
 [node name="ReducedMotionToggle" type="CheckButton" parent="Center/Panel/Content/Grid"]
+metadata/automation_id = "settings.reduced_motion"
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -79,6 +83,7 @@ text = "SETTINGS_SAVED_AUTOMATICALLY"
 autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="Center/Panel/Content"]
+metadata/automation_id = "settings.back"
 custom_minimum_size = Vector2(280, 52)
 layout_mode = 2
 size_flags_horizontal = 8

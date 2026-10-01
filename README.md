@@ -39,14 +39,28 @@ GODOT=/path/to/godot tests/run_tests.sh                 # everything CI runs
 godot --headless --path . res://tests/framework/test_runner.tscn -- --filter=save
 ```
 
-121 automated tests (unit + integration), boot smoke runs, translation key
-extraction, and an optional locale screenshot tool. See [`docs/TESTING.md`](docs/TESTING.md).
+179 Godot tests (unit + integration) and 25 Python automation-client tests,
+an end-to-end automation scenario, boot smoke runs, translation key
+extraction, and a locale screenshot tool. See [`docs/TESTING.md`](docs/TESTING.md).
 CI: `.github/workflows/ci.yml`.
+
+## Remote automation (dev/QA builds)
+
+AI agents, CI, and tools can inspect and drive the running game through a
+secure local JSON-RPC protocol (HTTP + WebSocket): stable entity ids, state,
+semantic actions, real keyboard/mouse/gamepad input, waits, assertions,
+fixtures, screenshots. Python SDK, CLI, and MCP adapter in `tools/automation/`.
+
+```bash
+PYTHONPATH=tools/automation python3 -m utopia_automation scenario first_mission --godot $GODOT --project . --headless
+```
+
+See [`docs/AUTOMATION.md`](docs/AUTOMATION.md).
 
 ## Project layout
 
 ```
-addons/ assets/ autoload/ core/ features/ scenes/ networking/ shaders/ tests/ docs/
+addons/ assets/ autoload/ core/ features/ scenes/ networking/ shaders/ automation/ tools/ tests/ docs/
 ```
 
 Explained in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
@@ -66,6 +80,7 @@ Explained in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | [COLLISION_AND_HIT_DETECTION](docs/COLLISION_AND_HIT_DETECTION.md) | Collision audit |
 | [TESTING](docs/TESTING.md) | Test runner and coverage |
 | [ADDING_A_FEATURE](docs/ADDING_A_FEATURE.md) | Step-by-step recipe |
+| [AUTOMATION](docs/AUTOMATION.md) | Remote automation protocol, security, SDK, CI |
 | [AI_INSTRUCTIONS](docs/AI_INSTRUCTIONS.md) | Rules for AI assistants and contributors |
 | [decisions/](docs/decisions/) | Architecture decision records |
 

@@ -36,6 +36,19 @@ smoke() {
     echo "Smoke run never reached '$expected'" >&2; exit 1
   fi
 }
+echo "== Automation client unit tests (Python, stdlib only)"
+(cd tools/automation && python3 -m unittest discover -s tests -t . -q)
+
+echo "== Automation end-to-end scenario (headless; CI also runs it under Xvfb with a screenshot)"
+PYTHONPATH=tools/automation python3 -m utopia_automation scenario first_mission \
+  --godot "$GODOT" --project . --out "${AUTOMATION_OUT:-build/automation}" --headless
+
+echo "== Production gating: the production profile must never open a socket"
+gate_out="$("$GODOT" --headless --audio-driver Dummy --quit-after 120 -- --automation --automation-profile=production 2>&1)"
+if ! grep -q "Automation server not started" <<<"$gate_out" || grep -q "listening on" <<<"$gate_out"; then
+  echo "$gate_out"; echo "production profile was not refused" >&2; exit 1
+fi
+
 echo "== Smoke: bootstrap -> main menu"
 smoke main_menu
 echo "== Smoke: bootstrap -> gameplay"

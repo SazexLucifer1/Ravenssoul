@@ -12,3 +12,8 @@
 Thumbs.db
 *.tmp
 .vscode/
+
+# Python / automation output
+__pycache__/
+*.pyc
+automation-output/

@@ -141,6 +141,15 @@ No voice or localized textures yet. Plan: `DialogueLine.voice_id` resolves to
 are always shown (accessibility). Localized textures use Godot's resource
 remaps (`internationalization/locale/translation_remaps`).
 
+## Automation and localization
+
+The automation protocol exchanges ids and translation keys: entities expose
+`text_key` (stable) and `text` (current localized string, for humans only).
+Tests and agents assert on keys, so they pass in every language. The only
+player-visible automation text is the `AUTOMATION_BADGE` key. Upper-snake
+strings that are not translation keys (environment variable names) are listed
+in `NOT_TRANSLATION_KEYS` in the localization test and the extraction tool.
+
 ## Ownership
 
 - Engineering owns keys, `Loc`/`LocaleFormat`, and validation tests.

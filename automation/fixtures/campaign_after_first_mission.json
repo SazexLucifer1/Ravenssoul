@@ -1,0 +1,12 @@
+{
+	"id": "campaign_after_first_mission",
+	"description": "First mission won and saved; title screen shows Continue.",
+	"route": "main_menu",
+	"campaign": {
+		"wallet": {"wood": 10, "stone": 0, "food": 0, "gold": 50, "soul_energy": 0},
+		"loadout": {"hero_id": "hero_deserter", "battalion_id": "battalion_militia"},
+		"active_mission_id": "mission_first_spark",
+		"completed_missions": ["mission_first_spark"],
+		"soul_energy_spent": 0
+	}
+}

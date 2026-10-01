@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "utopia-automation"
+version = "1.0.0"
+description = "Typed client, CLI, scenario runner, and MCP adapter for the Utopia remote automation protocol"
+requires-python = ">=3.10"
+dependencies = []  # standard library only
+
+[project.scripts]
+utopia-automation = "utopia_automation.cli:main"
+utopia-automation-mcp = "utopia_automation.mcp_server:main"
+
+[tool.setuptools]
+packages = ["utopia_automation"]

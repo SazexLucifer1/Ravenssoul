@@ -42,6 +42,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="UnitName" type="Label" parent="SafeArea/Layout/Top/UnitPanel/Content"]
+metadata/automation_id = "hud.unit_name"
 layout_mode = 2
 theme_type_variation = &"HeadingLabel"
 autowrap_mode = 3
@@ -52,6 +53,7 @@ theme_type_variation = &"MutedLabel"
 text = "HUD_HEALTH_LABEL"
 
 [node name="HealthBar" type="ProgressBar" parent="SafeArea/Layout/Top/UnitPanel/Content"]
+metadata/automation_id = "hud.health"
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2")
@@ -73,11 +75,13 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="MissionTitle" type="Label" parent="SafeArea/Layout/Top/MissionPanel/Content"]
+metadata/automation_id = "hud.mission_title"
 layout_mode = 2
 theme_type_variation = &"HeadingLabel"
 autowrap_mode = 3
 
 [node name="Objective" type="Label" parent="SafeArea/Layout/Top/MissionPanel/Content"]
+metadata/automation_id = "hud.objective"
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 autowrap_mode = 3
@@ -104,6 +108,7 @@ action = &"pause"
 text_key = "HUD_PROMPT_PAUSE"
 
 [node name="Hint" type="Label" parent="SafeArea/Layout/Bottom"]
+metadata/automation_id = "hud.hint"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DangerLabel"

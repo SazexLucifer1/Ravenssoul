@@ -12,6 +12,9 @@ func _ready() -> void:
 	quit_button.activated.connect(func() -> void: get_tree().quit(1))
 	# Let autoloads finish _ready and the loading text render once.
 	await get_tree().process_frame
+	# Dev/QA builds only, and only when requested on the command line.
+	if not get_tree().root.has_node(^"Automation"):
+		AutomationGate.start_if_requested(get_tree())
 	var problems: PackedStringArray = verify_startup()
 	if not problems.is_empty():
 		for problem: String in problems:

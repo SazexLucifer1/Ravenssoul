@@ -82,6 +82,15 @@ Technical details (`SaveResult.detail`) go to `DevLog` only.
 
 Never edit a released migration; never rename a stored id without one.
 
+## Automation isolation
+
+While the remote automation server runs, `SaveService.backend` points at
+`user://automation/saves/` and `Settings.settings_path` at
+`user://automation/settings.cfg`; both are deleted and the originals restored
+on shutdown, so automated runs never touch a player's saves or preferences.
+Fixtures (`automation/fixtures/*.json`) use the same payload format as
+`data` above.
+
 ## Troubleshooting
 
 - Save location: `user://saves/` → Linux `~/.local/share/godot/app_userdata/Utopia/saves/`,

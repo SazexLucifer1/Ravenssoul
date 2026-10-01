@@ -1,0 +1,12 @@
+{
+	"id": "campaign_corrupted_soul",
+	"description": "Campaign that has spent soul energy (for story-threshold tests once that system exists).",
+	"route": "main_menu",
+	"campaign": {
+		"wallet": {"wood": 40, "stone": 25, "food": 30, "gold": 200, "soul_energy": 5},
+		"loadout": {"hero_id": "hero_deserter", "battalion_id": "battalion_militia"},
+		"active_mission_id": "mission_first_spark",
+		"completed_missions": ["mission_first_spark"],
+		"soul_energy_spent": 12
+	}
+}

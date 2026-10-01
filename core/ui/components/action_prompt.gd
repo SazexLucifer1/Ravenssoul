@@ -6,11 +6,13 @@ extends HBoxContainer
 @export var action: StringName = &"ui_cancel"
 @export var text_key: String = ""
 
-var _glyph := Label.new()
-var _label := Label.new()
+var _glyph: Label
+var _label: Label
 
 
 func _ready() -> void:
+	_glyph = Label.new()
+	_label = Label.new()
 	_glyph.theme_type_variation = &"KeycapLabel"
 	_glyph.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_label.theme_type_variation = &"MutedLabel"

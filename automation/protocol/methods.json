@@ -1,0 +1,836 @@
+{
+ "protocol": "utopia-automation",
+ "version": "1.0",
+ "transport": {
+  "http": "POST /v1/rpc (JSON-RPC 2.0), GET /v1/health",
+  "websocket": "ws://host:port+1/ (JSON-RPC 2.0 + event notifications)"
+ },
+ "methods": {
+  "session.hello": {
+   "capability": "session",
+   "summary": "Start/resume the session; returns protocol version, profile, granted capabilities.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{protocol, session_id, profile, capabilities[], expires_at_unix}"
+  },
+  "session.close": {
+   "capability": "session",
+   "summary": "End the session: releases held input, stops recording, removes fixtures and checkpoints.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{closed}"
+  },
+  "session.reset": {
+   "capability": "reset",
+   "summary": "Release input, clear campaign state and automation saves, unpause, go to a route (default main_menu).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "route": {
+      "type": "string",
+      "enum": [
+       "main_menu",
+       "gameplay"
+      ]
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{route}"
+  },
+  "protocol.capabilities": {
+   "capability": "session",
+   "summary": "Protocol version, engine/adapter, build, profile, capabilities, methods, actions, input devices, events, limits.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "object"
+  },
+  "protocol.schema": {
+   "capability": "session",
+   "summary": "This method table (params schemas and capabilities).",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "object"
+  },
+  "scene.current": {
+   "capability": "inspect",
+   "summary": "Current route, scene id, transition and pause state, open screens.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "object"
+  },
+  "tree.query": {
+   "capability": "inspect",
+   "summary": "List entities (scene, screens, UI controls, units, grid, mission, resources) matching filters.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "role": {
+      "type": "string",
+      "maxLength": 32
+     },
+     "type": {
+      "type": "string",
+      "maxLength": 32
+     },
+     "tag": {
+      "type": "string",
+      "maxLength": 32
+     },
+     "id_prefix": {
+      "type": "string",
+      "maxLength": 128
+     },
+     "visible_only": {
+      "type": "boolean"
+     },
+     "interactable_only": {
+      "type": "boolean"
+     },
+     "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 500
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{entities[]}"
+  },
+  "entity.get": {
+   "capability": "inspect",
+   "summary": "Describe one entity. deep=true needs inspect.deep (dev).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9_.#/-]+$"
+     },
+     "deep": {
+      "type": "boolean"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "id"
+    ]
+   },
+   "result": "entity"
+  },
+  "state.get": {
+   "capability": "inspect",
+   "summary": "Authoritative game-state snapshot (ids and numbers only).",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "object"
+  },
+  "actions.available": {
+   "capability": "inspect",
+   "summary": "Semantic actions that can be performed right now, with targets.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{actions[]}"
+  },
+  "action.perform": {
+   "capability": "act.semantic",
+   "summary": "Perform a semantic game action (validated against game rules).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "activate",
+       "select",
+       "toggle",
+       "confirm",
+       "cancel",
+       "move",
+       "pause",
+       "resume",
+       "interact",
+       "equip",
+       "use",
+       "choose_dialogue"
+      ]
+     },
+     "target": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9_.#/-]+$"
+     },
+     "args": {
+      "type": "object"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "action"
+    ]
+   },
+   "result": "{performed, ...}"
+  },
+  "input.key": {
+   "capability": "act.input",
+   "summary": "Inject a keyboard key through the real input path. down without up is a held input.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24
+     },
+     "mode": {
+      "type": "string",
+      "enum": [
+       "tap",
+       "down",
+       "up"
+      ]
+     },
+     "duration_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "key"
+    ]
+   },
+   "result": "{held[]}"
+  },
+  "input.action": {
+   "capability": "act.input",
+   "summary": "Inject an InputMap action press/release.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48
+     },
+     "mode": {
+      "type": "string",
+      "enum": [
+       "tap",
+       "down",
+       "up"
+      ]
+     },
+     "duration_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "action"
+    ]
+   },
+   "result": "{held[]}"
+  },
+  "input.mouse": {
+   "capability": "act.input",
+   "summary": "Mouse at logical (1280x720-space) coordinates.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "move",
+       "click",
+       "down",
+       "up"
+      ]
+     },
+     "x": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 8192
+     },
+     "y": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 8192
+     },
+     "button": {
+      "type": "string",
+      "enum": [
+       "left",
+       "right",
+       "middle"
+      ]
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "mode",
+     "x",
+     "y"
+    ]
+   },
+   "result": "{held[]}"
+  },
+  "input.gamepad": {
+   "capability": "act.input",
+   "summary": "Gamepad button (button+mode) or axis (axis+value).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "button": {
+      "type": "string",
+      "enum": [
+       "a",
+       "b",
+       "x",
+       "y",
+       "start",
+       "back",
+       "dpad_up",
+       "dpad_down",
+       "dpad_left",
+       "dpad_right",
+       "left_shoulder",
+       "right_shoulder"
+      ]
+     },
+     "axis": {
+      "type": "string",
+      "enum": [
+       "left_x",
+       "left_y",
+       "right_x",
+       "right_y"
+      ]
+     },
+     "value": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+     },
+     "mode": {
+      "type": "string",
+      "enum": [
+       "tap",
+       "down",
+       "up"
+      ]
+     },
+     "duration_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{held[]}"
+  },
+  "input.touch": {
+   "capability": "act.input",
+   "summary": "Touch/pointer event at logical coordinates.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "index": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+     },
+     "x": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 8192
+     },
+     "y": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 8192
+     },
+     "mode": {
+      "type": "string",
+      "enum": [
+       "tap",
+       "down",
+       "up",
+       "drag"
+      ]
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "x",
+     "y"
+    ]
+   },
+   "result": "{held[]}"
+  },
+  "input.release_all": {
+   "capability": "act.input",
+   "summary": "Release every held key, button, action, axis and touch.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{released}"
+  },
+  "wait.frames": {
+   "capability": "wait",
+   "summary": "Wait an exact number of process frames.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 600
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "count"
+    ]
+   },
+   "result": "{frames}"
+  },
+  "wait.until": {
+   "capability": "wait",
+   "summary": "Wait until a predicate holds (checked once per frame).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "condition": {
+      "type": "object",
+      "description": "Predicate; see docs/AUTOMATION.md#predicates"
+     },
+     "timeout_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 120000
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "condition"
+    ]
+   },
+   "result": "{met, frames, elapsed_ms, actual}"
+  },
+  "wait.event": {
+   "capability": "wait",
+   "summary": "Wait for an event of a type (optionally matching fields) after a sequence number.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "type": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48
+     },
+     "match": {
+      "type": "object"
+     },
+     "after_seq": {
+      "type": "integer",
+      "minimum": 0
+     },
+     "timeout_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 120000
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "type"
+    ]
+   },
+   "result": "{met, event}"
+  },
+  "wait.settled": {
+   "capability": "wait",
+   "summary": "Wait until no scene transition, unit movement, or held input is in progress.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "timeout_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 120000
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{met, frames}"
+  },
+  "assert.check": {
+   "capability": "assert",
+   "summary": "Evaluate a predicate now; failures are returned (not raised) and logged in the session.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "condition": {
+      "type": "object",
+      "description": "Predicate; see docs/AUTOMATION.md#predicates"
+     },
+     "message": {
+      "type": "string",
+      "maxLength": 200
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "condition"
+    ]
+   },
+   "result": "{passed, actual, message}"
+  },
+  "checkpoint.create": {
+   "capability": "checkpoint",
+   "summary": "Snapshot campaign state + route in memory.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "^[a-z0-9_]+$"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "name"
+    ]
+   },
+   "result": "{name}"
+  },
+  "checkpoint.restore": {
+   "capability": "checkpoint",
+   "summary": "Restore a checkpoint (campaign state + route).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "^[a-z0-9_]+$"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "name"
+    ]
+   },
+   "result": "{name, route}"
+  },
+  "checkpoint.list": {
+   "capability": "checkpoint",
+   "summary": "List checkpoint names.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{names[]}"
+  },
+  "fixture.list": {
+   "capability": "fixture",
+   "summary": "Approved fixture ids.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{fixtures[]}"
+  },
+  "fixture.load": {
+   "capability": "fixture",
+   "summary": "Apply an approved fixture (campaign state, optional save slot in the isolated automation save folder).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "fixture": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "^[a-z0-9_]+$"
+     },
+     "write_save": {
+      "type": "boolean"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "fixture"
+    ]
+   },
+   "result": "{fixture, route}"
+  },
+  "recording.start": {
+   "capability": "recording",
+   "summary": "Start recording requests and events.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{recording}"
+  },
+  "recording.stop": {
+   "capability": "recording",
+   "summary": "Stop and return the recording.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "{entries[]}"
+  },
+  "observe.screenshot": {
+   "capability": "observe.screenshot",
+   "summary": "PNG of the current frame (base64). Unavailable in headless runs.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "max_width": {
+      "type": "integer",
+      "minimum": 64,
+      "maximum": 3840
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{width, height, png_base64}"
+  },
+  "observe.logs": {
+   "capability": "observe.logs",
+   "summary": "Recent engine/game log lines (paths redacted).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "since_seq": {
+      "type": "integer",
+      "minimum": 0
+     },
+     "min_level": {
+      "type": "string",
+      "enum": [
+       "info",
+       "warning",
+       "error"
+      ]
+     },
+     "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 500
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{lines[], last_seq}"
+  },
+  "observe.events": {
+   "capability": "observe.events",
+   "summary": "Recent events after a sequence number.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "since_seq": {
+      "type": "integer",
+      "minimum": 0
+     },
+     "types": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 48
+      },
+      "maxItems": 32
+     },
+     "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 500
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{events[], last_seq}"
+  },
+  "events.subscribe": {
+   "capability": "observe.events",
+   "summary": "WebSocket only: push matching events as notifications.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "types": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 48
+      },
+      "maxItems": 32
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{subscribed[]}"
+  },
+  "observe.perf": {
+   "capability": "observe.perf",
+   "summary": "FPS, frame times, node/object counts, static memory.",
+   "params": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "result": "object"
+  },
+  "app.quit": {
+   "capability": "app.quit",
+   "summary": "Clean shutdown (cleanup runs first).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "exit_code": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+     }
+    },
+    "additionalProperties": false
+   },
+   "result": "{quitting}"
+  },
+  "dev.teleport": {
+   "capability": "dev.teleport",
+   "summary": "Move a unit to any walkable free cell, bypassing movement rules.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "target": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9_.#/-]+$"
+     },
+     "cell": {
+      "type": "array",
+      "items": {
+       "type": "integer",
+       "minimum": -1,
+       "maximum": 64
+      },
+      "minItems": 2,
+      "maxItems": 2
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "target",
+     "cell"
+    ]
+   },
+   "result": "{cell}"
+  },
+  "dev.spawn": {
+   "capability": "dev.spawn",
+   "summary": "Spawn an extra unit from roster ids on a free cell (gameplay only).",
+   "params": {
+    "type": "object",
+    "properties": {
+     "hero_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9_.#/-]+$"
+     },
+     "battalion_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9_.#/-]+$"
+     },
+     "cell": {
+      "type": "array",
+      "items": {
+       "type": "integer",
+       "minimum": -1,
+       "maximum": 64
+      },
+      "minItems": 2,
+      "maxItems": 2
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "hero_id",
+     "battalion_id",
+     "cell"
+    ]
+   },
+   "result": "{id}"
+  },
+  "dev.command": {
+   "capability": "dev.command",
+   "summary": "Allow-listed debug commands. There is no arbitrary code execution.",
+   "params": {
+    "type": "object",
+    "properties": {
+     "command": {
+      "type": "string",
+      "enum": [
+       "heal_all",
+       "grant_resources",
+       "win_mission",
+       "lose_mission"
+      ]
+     },
+     "args": {
+      "type": "object"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "command"
+    ]
+   },
+   "result": "object"
+  }
+ }
+}

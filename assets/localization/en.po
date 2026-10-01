@@ -354,3 +354,7 @@ msgstr "Something went wrong"
 #. Explains a failed screen change; progress is unaffected.
 msgid "ROUTE_FAILED_BODY"
 msgstr "That part of the game couldn't be opened. Your saved progress is safe. Please try again; if it keeps happening, verify or reinstall the game."
+
+#. Small badge shown only while a developer/QA automation client controls the game. Keep short.
+msgid "AUTOMATION_BADGE"
+msgstr "Automated test session active"

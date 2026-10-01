@@ -72,6 +72,16 @@ outcomes (damage, death, movement legality) are decided before animation
 plays and never wait for an animation event. See
 [ANIMATION_AND_MOVEMENT.md](ANIMATION_AND_MOVEMENT.md).
 
+## Automation events
+
+The automation layer (`automation/adapter/`) subscribes to the signals above
+and republishes them as protocol events (`route.changed`, `screen.opened`,
+`unit.moved`, `unit.damaged`, `mission.finished`, `save.finished`, …) with
+ids and numbers only. Game code never emits automation events itself; adding
+a signal that tests should observe means hooking it in the provider's
+`hook_scene()` or the adapter's `connect_events()`. Full list:
+[AUTOMATION.md](AUTOMATION.md#events).
+
 ## Input actions
 
 | Action | Keyboard | Gamepad | Used by |

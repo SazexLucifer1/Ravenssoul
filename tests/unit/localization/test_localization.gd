@@ -3,11 +3,13 @@ extends TestCase
 ## text, fallback, pseudolocalization, plurals, and number formatting.
 
 const CATALOG_DIR: String = "res://assets/localization"
-const SOURCE_DIRS: PackedStringArray = ["res://autoload", "res://core", "res://features", "res://scenes"]
+const SOURCE_DIRS: PackedStringArray = ["res://autoload", "res://core", "res://features", "res://scenes", "res://automation"]
 const KEY_PATTERN: String = "\"([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+)\""
 const PLACEHOLDER_PATTERN: String = "\\{[a-z_]+\\}"
 ## Keys built at runtime from stable ids (e.g. "RESOURCE_" + id). Documented in docs/LOCALIZATION.md.
 const DYNAMIC_PREFIXES: PackedStringArray = ["RESOURCE_"]
+## UPPER_SNAKE strings that are not translation keys (environment variable names).
+const NOT_TRANSLATION_KEYS: PackedStringArray = ["UTOPIA_AUTOMATION_TOKEN"]
 
 
 func _catalog(locale: String) -> Translation:
@@ -122,6 +124,8 @@ func test_all_referenced_keys_exist() -> void:
 			var key: String = match.get_string(1)
 			if key.ends_with("_PLURAL"):
 				key = key.trim_suffix("_PLURAL")
+			if NOT_TRANSLATION_KEYS.has(key):
+				continue
 			assert_true(keys.has(key), "%s references missing key %s" % [path, key])
 
 

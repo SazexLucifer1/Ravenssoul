@@ -76,6 +76,15 @@ exported references are preferred because they survive renames.
 - Pausing is done only by the gameplay scene (pause menu); the router
   always unpauses on route change.
 
+## Automation ids
+
+Interactive controls and screen roots carry a stable id in node metadata:
+`metadata/automation_id = "pause.resume"` (screens: `screen.pause`). Ids are
+`<area>.<name>`, lowercase, unique within a scene, and never derived from
+display text. They are inert data (no script), so they are safe in every
+build. Game objects get ids from content ids in the automation provider. See
+`AUTOMATION.md`.
+
 ## Naming
 
 - Nodes: `PascalCase` (`HealthComponent`, `ResumeButton`).

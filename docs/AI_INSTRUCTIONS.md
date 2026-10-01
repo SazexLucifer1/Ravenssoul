@@ -22,6 +22,8 @@ in the same change.
 | `features/<name>/` | Gameplay features: `data/` (Resource scripts), `content/` (.tres), `ui/`, logic, scenes, README |
 | `scenes/` | Routed top-level scenes and game menus |
 | `assets/` | Localization catalogs, generated theme, art/audio/fonts |
+| `automation/` | Remote automation server/protocol/adapter only (see `docs/AUTOMATION.md`) |
+| `tools/automation/` | Python automation client, CLI, MCP adapter, scenario (stdlib only) |
 | `tests/` | `unit/<area>/test_*.gd`, `integration/test_*.gd`, `framework/`, `tools/` |
 | `docs/` | Documentation, `decisions/` ADRs, `game-design/` |
 
@@ -90,6 +92,23 @@ motion respected); theme changes go through `ui_tokens.tres` + rebuilding the
 theme (`godot --headless --script res://core/ui/theme/build_theme.gd`), never
 by hand-editing `utopia_theme.tres`. Details: `docs/UI_ARCHITECTURE.md`.
 
+## Automation (remote testing interface)
+
+- Every new button, switch, combobox, and `UiScreen` root gets
+  `metadata/automation_id = "<area>.<name>"` (screens: `screen.<name>`);
+  add new screens to the list in `test_every_button_in_shipped_screens_has_an_automation_id`.
+- New game objects get stable ids derived from content ids via
+  `UtopiaAutomationProvider` — never from node names or display text.
+- Game code (`autoload/`, `core/`, `features/`, `scenes/`) must never
+  reference automation classes (test-enforced); only `AutomationGate` starts
+  the server, by path.
+- Never add arbitrary code/console execution, file-path parameters, or
+  unvalidated mutation to the protocol. New methods need a capability, a
+  strict schema in `methods.json`, a handler, a client wrapper, tests, and a
+  regenerated docs table (`python3 tools/automation/scripts/gen_method_table.py`).
+- Automation exchanges ids and translation keys, never localized text.
+- Details and how-tos: `docs/AUTOMATION.md`.
+
 ## Gameplay rules vs. visuals
 
 The logical grid is the source of truth. Rules resolve first and never wait
@@ -105,7 +124,7 @@ data, integration tests for scenes/flows, new screens added to
 Validation commands (all must pass before you finish):
 
 ```bash
-GODOT=/path/to/godot tests/run_tests.sh            # full suite + smoke + key extraction
+GODOT=/path/to/godot tests/run_tests.sh            # full suite, Python client tests, automation scenario, gating, smoke, key extraction
 godot --headless --script res://tests/tools/extract_keys.gd   # localization keys
 ```
 

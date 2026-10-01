@@ -12,7 +12,7 @@ recorded in [`decisions/`](decisions/).
 | Engine | Godot **4.6** (`config/features` = `4.6`) | Current stable. Needs ≥ 4.5 for `Logger`, `SceneTree.scene_changed`, `Control.focus_behavior_recursive` (all used). |
 | Renderer | **GL Compatibility** | 2D only; widest Windows/Linux GPU support (OpenGL 3.3). No Forward+ features needed. See ADR 0002. |
 | Language | Typed GDScript | Beginner-friendly; `untyped_declaration` warning is enabled. |
-| Platforms | Windows, Linux (x86_64) | `export_presets.cfg` has both presets. |
+| Platforms | Windows, Linux (x86_64) | `export_presets.cfg`: Windows and Linux release presets (exclude `automation/`), plus "Linux QA (automation)" with the `automation_qa` feature. |
 | Multiplayer | None | `networking/` is reserved (see its README). |
 | Base resolution | 1280×720, `canvas_items` stretch, `expand` aspect | Scales to 1080p/1440p, ultrawide adds width. |
 
@@ -27,8 +27,10 @@ core/        game-agnostic building blocks: components, routing, save, localizat
 features/    gameplay features: characters, combat, quests, inventory, dialogue,
              (planned) scouting, base_building, soul_energy, interactions
 scenes/      top-level routed scenes (bootstrap, main_menu, gameplay) and game menus
-networking/  reserved
+networking/  reserved for gameplay networking (none)
 shaders/     shared shaders (none yet)
+automation/  remote automation server, protocol, Godot adapter (dev/QA builds only; excluded from release exports)
+tools/       external tooling outside the Godot project (`.gdignore`): Python automation client/CLI/MCP
 tests/       framework, unit tests, integration tests, tools (screenshots, key extraction)
 docs/        this documentation, ADRs, game design
 ```
@@ -61,13 +63,18 @@ scenes/   ──► features/ ──► core/
 | `GameSession` | `autoload/game_session.gd` | Campaign state (roster, resources, soul-energy tally) must outlive routed scenes. | in-memory campaign |
 | `SceneRouter` | `autoload/scene_router.gd` | A scene cannot replace itself safely; the fade overlay must outlive both scenes. Only caller of `change_scene_to_*`. | current route, fade layer |
 
-There is deliberately **no UI autoload** and no "GameManager". Menus are
+There is deliberately **no UI autoload** and no "GameManager". The remote
+automation server is **not** an autoload either: `AutomationGate`
+(`core/diagnostics/`) starts it from bootstrap only when `--automation` is
+passed in a debug or QA build, and adds it under the root as `Automation`
+(see [AUTOMATION.md](AUTOMATION.md), ADRs 0008/0009). Menus are
 owned by the scene that shows them via a scene-local `ScreenStack`.
 Adding an autoload requires an ADR (see `AI_INSTRUCTIONS.md`).
 
 ## Runtime flow
 
-1. `scenes/bootstrap/bootstrap.tscn` (main scene) waits one frame, verifies
+1. `scenes/bootstrap/bootstrap.tscn` (main scene) waits one frame, asks
+   `AutomationGate` whether to start the automation server, verifies
    routes, translations, and roster content, then calls
    `SceneRouter.goto(Routes.MAIN_MENU)`. On failure it shows a player-readable
    error with a Close button. Debug builds accept `-- --route=<id>`.
@@ -111,6 +118,7 @@ movement arrives it calls the same `PlayerUnitController.try_step` /
 - [COLLISION_AND_HIT_DETECTION.md](COLLISION_AND_HIT_DETECTION.md) — collision audit
 - [TESTING.md](TESTING.md) — test runner, commands, coverage
 - [ADDING_A_FEATURE.md](ADDING_A_FEATURE.md) — step-by-step recipe
+- [AUTOMATION.md](AUTOMATION.md) — remote automation protocol, security, SDK, CI
 - [AI_INSTRUCTIONS.md](AI_INSTRUCTIONS.md) — rules for AI and human contributors
 
 ## Known limitations

@@ -34,11 +34,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Status" type="Label" parent="Center"]
+metadata/automation_id = "boot.status"
 layout_mode = 2
 theme_type_variation = &"MutedLabel"
 text = "BOOT_LOADING"
 
 [node name="ErrorPanel" type="PanelContainer" parent="Center"]
+metadata/automation_id = "boot.error"
 visible = false
 custom_minimum_size = Vector2(560, 0)
 layout_mode = 2
@@ -59,6 +61,7 @@ text = "BOOT_ERROR_BODY"
 autowrap_mode = 3
 
 [node name="QuitButton" type="Button" parent="Center/ErrorPanel/Content"]
+metadata/automation_id = "boot.quit"
 custom_minimum_size = Vector2(240, 52)
 layout_mode = 2
 size_flags_horizontal = 8

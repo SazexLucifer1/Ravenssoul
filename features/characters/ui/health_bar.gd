@@ -3,11 +3,12 @@ extends ProgressBar
 ## Displays a HealthComponent. Always shows numbers as text so health is never
 ## communicated by color alone.
 
-var _value_label := Label.new()
+var _value_label: Label
 var _health: HealthComponent
 
 
 func _ready() -> void:
+	_value_label = Label.new()
 	show_percentage = false
 	theme_type_variation = &"HealthBar"
 	custom_minimum_size.y = maxf(custom_minimum_size.y, 28.0)

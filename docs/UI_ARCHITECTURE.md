@@ -109,6 +109,14 @@ version, unreadable, missing), startup failure, scene failed to open,
 victory, defeat, blocked move, hazard. Not applicable yet: offline,
 permission prompts, reconnect (single-player, no online features).
 
+## Automation badge
+
+When the remote automation server is running, a small localized badge
+(`AUTOMATION_BADGE`: "Automated test session active") is shown at the top
+center on canvas layer 120, ignoring the mouse. It never appears in normal
+play. Every interactive control must carry an `automation_id` (see
+`SCENE_TREE_RULES.md`).
+
 ## Tests
 
 `tests/unit/ui/` (button states, repeat input, busy/cooldown/error, stack

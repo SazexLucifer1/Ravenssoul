@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://core/ui/screens/confirm_dialog.tscn" id="6"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("layout_root", "new_game_button", "continue_button", "settings_button", "quit_button", "version_label", "screen_stack")]
+metadata/automation_id = "screen.main_menu"
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,6 +59,7 @@ base_margin = 64
 layout_mode = 2
 
 [node name="Title" type="Label" parent="SafeArea/Layout"]
+metadata/automation_id = "main_menu.title"
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
 text = "GAME_TITLE"
@@ -79,6 +81,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="ContinueButton" type="Button" parent="SafeArea/Layout/Buttons"]
+metadata/automation_id = "main_menu.continue"
 custom_minimum_size = Vector2(320, 52)
 layout_mode = 2
 theme_type_variation = &"PrimaryButton"
@@ -87,6 +90,7 @@ script = ExtResource("2")
 busy_text_key = "UI_LOADING_SHORT"
 
 [node name="NewGameButton" type="Button" parent="SafeArea/Layout/Buttons"]
+metadata/automation_id = "main_menu.new_game"
 custom_minimum_size = Vector2(320, 52)
 layout_mode = 2
 text = "MAIN_MENU_NEW_GAME"
@@ -94,12 +98,14 @@ script = ExtResource("2")
 busy_text_key = "UI_LOADING_SHORT"
 
 [node name="SettingsButton" type="Button" parent="SafeArea/Layout/Buttons"]
+metadata/automation_id = "main_menu.settings"
 custom_minimum_size = Vector2(320, 52)
 layout_mode = 2
 text = "MENU_SETTINGS"
 script = ExtResource("2")
 
 [node name="QuitButton" type="Button" parent="SafeArea/Layout/Buttons"]
+metadata/automation_id = "main_menu.quit"
 custom_minimum_size = Vector2(320, 52)
 layout_mode = 2
 text = "MAIN_MENU_QUIT"
@@ -114,6 +120,7 @@ mouse_filter = 2
 layout_mode = 2
 
 [node name="Version" type="Label" parent="SafeArea/Layout/Footer"]
+metadata/automation_id = "main_menu.version"
 layout_mode = 2
 theme_type_variation = &"MutedLabel"
 auto_translate_mode = 2

@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
 
 [node name="MissionResultScreen" type="Control" node_paths=PackedStringArray("title_label", "body_label", "rewards_label", "save_status_label", "continue_button", "retry_button", "save_retry_button")]
+metadata/automation_id = "screen.result"
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,23 +36,27 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Center/Panel/Content"]
+metadata/automation_id = "result.title"
 layout_mode = 2
 theme_type_variation = &"HeadingLabel"
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Body" type="Label" parent="Center/Panel/Content"]
+metadata/automation_id = "result.body"
 custom_minimum_size = Vector2(580, 0)
 layout_mode = 2
 autowrap_mode = 3
 
 [node name="Rewards" type="Label" parent="Center/Panel/Content"]
+metadata/automation_id = "result.rewards"
 custom_minimum_size = Vector2(580, 0)
 layout_mode = 2
 auto_translate_mode = 2
 autowrap_mode = 3
 
 [node name="SaveStatus" type="Label" parent="Center/Panel/Content"]
+metadata/automation_id = "result.save_status"
 custom_minimum_size = Vector2(580, 0)
 layout_mode = 2
 theme_type_variation = &"MutedLabel"
@@ -62,6 +67,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="RetryButton" type="Button" parent="Center/Panel/Content/Buttons"]
+metadata/automation_id = "result.retry"
 custom_minimum_size = Vector2(200, 52)
 layout_mode = 2
 theme_type_variation = &"PrimaryButton"
@@ -69,12 +75,14 @@ text = "RESULT_RETRY"
 script = ExtResource("2")
 
 [node name="SaveRetryButton" type="Button" parent="Center/Panel/Content/Buttons"]
+metadata/automation_id = "result.save_retry"
 custom_minimum_size = Vector2(200, 52)
 layout_mode = 2
 text = "SAVE_TRY_AGAIN"
 script = ExtResource("2")
 
 [node name="ContinueButton" type="Button" parent="Center/Panel/Content/Buttons"]
+metadata/automation_id = "result.continue"
 custom_minimum_size = Vector2(200, 52)
 layout_mode = 2
 text = "RESULT_CONTINUE"

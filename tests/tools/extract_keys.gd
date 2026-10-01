@@ -4,7 +4,9 @@ extends SceneTree
 ##   godot --headless --script res://tests/tools/extract_keys.gd
 ## Exit code 1 when keys are missing.
 
-const SOURCE_DIRS: PackedStringArray = ["res://autoload", "res://core", "res://features", "res://scenes"]
+const SOURCE_DIRS: PackedStringArray = ["res://autoload", "res://core", "res://features", "res://scenes", "res://automation"]
+## Keep in sync with NOT_TRANSLATION_KEYS in tests/unit/localization/test_localization.gd.
+const NOT_TRANSLATION_KEYS: PackedStringArray = ["UTOPIA_AUTOMATION_TOKEN"]
 const KEY_PATTERN: String = "\"([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+)\""
 
 
@@ -21,7 +23,7 @@ func _initialize() -> void:
 	for path: String in files:
 		for m: RegExMatch in regex.search_all(FileAccess.get_file_as_string(path)):
 			var key: String = m.get_string(1).trim_suffix("_PLURAL")
-			if not known.has(key):
+			if not known.has(key) and not NOT_TRANSLATION_KEYS.has(key):
 				missing[key] = path
 	for key: String in missing:
 		print("#. TODO translator note (referenced in %s)\nmsgid \"%s\"\nmsgstr \"\"\n" % [missing[key], key])

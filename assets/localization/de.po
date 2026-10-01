@@ -440,3 +440,8 @@ msgstr "Etwas ist schiefgelaufen"
 #. English: That part of the game couldn't be opened. Your saved progress is safe. Please try again; if it keeps happening, verify or reinstall the game.
 msgid "ROUTE_FAILED_BODY"
 msgstr "Dieser Teil des Spiels konnte nicht geöffnet werden. Dein gespeicherter Fortschritt ist sicher. Bitte versuche es erneut; tritt der Fehler wieder auf, überprüfe oder installiere das Spiel neu."
+
+#. Small badge shown only while a developer/QA automation client controls the game. Keep short.
+#. English: Automated test session active
+msgid "AUTOMATION_BADGE"
+msgstr "Automatisierte Testsitzung aktiv"

@@ -18,12 +18,15 @@ const TOKENS: UiTokens = preload("res://core/ui/theme/ui_tokens.tres")
 @export var underlying_root: Control
 
 var _entries: Array[Dictionary] = []
-var _scrim := ColorRect.new()
+var _scrim: ColorRect
 
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Created here (not at member init) so an instance that never enters the
+	# tree doesn't leak an orphan node.
+	_scrim = ColorRect.new()
 	_scrim.color = TOKENS.scrim
 	_scrim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_scrim.mouse_filter = Control.MOUSE_FILTER_STOP

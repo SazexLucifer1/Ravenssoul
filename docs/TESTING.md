@@ -3,7 +3,9 @@
 ## Commands
 
 ```bash
-# Everything CI runs (import, tests, leak check, key extraction, two boot smoke runs):
+# Everything CI's main job runs (import, Godot tests, leak check, key extraction,
+# Python automation-client tests, headless automation scenario, production-gating
+# check, two boot smoke runs):
 GODOT=/path/to/godot tests/run_tests.sh
 
 # Only the automated tests:
@@ -16,6 +18,11 @@ godot --headless --path . res://tests/framework/test_runner.tscn -- --filter=int
 # Locale screenshots (needs a renderer; Linux headless machines use Xvfb):
 xvfb-run -a -s "-screen 0 1280x720x24" godot --path . --rendering-driver opengl3 \
   --audio-driver Dummy res://tests/tools/screenshot_capture.tscn -- --out=$PWD/screenshots
+
+# Automation (see docs/AUTOMATION.md):
+(cd tools/automation && python3 -m unittest discover -s tests -t .)
+PYTHONPATH=tools/automation xvfb-run -a python3 -m utopia_automation scenario first_mission \
+  --godot $GODOT --project . --out automation-output --require-screenshot
 ```
 
 Run `godot --headless --import` once after cloning (or after adding
@@ -50,11 +57,16 @@ tests/unit/combat/        deck, turn order, grid legality ("collision")
 tests/unit/inventory/     resource wallet
 tests/unit/localization/  catalogs, keys, plurals, fallback, pseudo, formatting, fonts
 tests/unit/ui/            game button states, screen stack, safe area, theme
-tests/integration/        boot flow, character movement/animation, gameplay flow, UI layout
+tests/unit/automation/    schema validator, predicates, auth/origin/rate limit/profiles/gate,
+                          HTTP parsing, event log, input driver, dependency boundary
+tests/integration/        boot flow, character movement/animation, gameplay flow, UI layout,
+                          automation server (dispatch, HTTP + WebSocket over real sockets)
+tests/framework/          runner, TestCase, AutomationTestCase (in-process server + socket clients)
 tests/tools/              screenshot capture, translation key extraction
+tools/automation/tests/   Python: client vs fake server, MCP adapter, launcher, protocol/doc parity
 ```
 
-## What is covered (121 tests at the time of writing)
+## What is covered (179 Godot tests + 25 Python tests at the time of writing)
 
 - Definition of done: bootstrap → main menu → gameplay (`test_boot_flow`) plus
   smoke runs of the real executable in `run_tests.sh`.
@@ -73,6 +85,11 @@ tests/tools/              screenshot capture, translation key extraction
   no focus dead ends, one primary action, pause/settings/abandon/result flows,
   autosave success/failure/retry.
 - Localization: see `LOCALIZATION.md`.
+- Automation: protocol validation, malformed commands, authorization and
+  capability denial, rate limiting, production gating, export exclusion,
+  stable ids, deterministic waits, held-input release (session close, scene
+  change, idle timeout, shutdown), reconnects, scene transitions, HTTP/WebSocket
+  security, and the end-to-end first-mission scenario — see `AUTOMATION.md`.
 
 ## Writing a test
 

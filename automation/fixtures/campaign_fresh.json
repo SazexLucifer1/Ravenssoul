@@ -1,0 +1,12 @@
+{
+	"id": "campaign_fresh",
+	"description": "New campaign with the default hero and battalion, starting the first mission.",
+	"route": "gameplay",
+	"campaign": {
+		"wallet": {"wood": 0, "stone": 0, "food": 0, "gold": 0, "soul_energy": 0},
+		"loadout": {"hero_id": "hero_deserter", "battalion_id": "battalion_militia"},
+		"active_mission_id": "mission_first_spark",
+		"completed_missions": [],
+		"soul_energy_spent": 0
+	}
+}
