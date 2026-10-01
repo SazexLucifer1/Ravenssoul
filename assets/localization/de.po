@@ -337,9 +337,9 @@ msgid "SAVE_ERROR_NOT_FOUND"
 msgstr "Es wurde kein gespeicherter Feldzug gefunden. Beginne einen neuen Feldzug."
 
 #. Save file unreadable.
-#. English: Your saved campaign is damaged and can't be loaded. A backup may be restored automatically in a future update; for now, start a new campaign.
+#. English: Your saved campaign is damaged and can't be loaded. Your settings are not affected. Start a new campaign to keep playing.
 msgid "SAVE_ERROR_CORRUPTED"
-msgstr "Dein gespeicherter Feldzug ist beschädigt und kann nicht geladen werden. Beginne vorerst einen neuen Feldzug."
+msgstr "Dein gespeicherter Feldzug ist beschädigt und kann nicht geladen werden. Deine Einstellungen sind nicht betroffen. Beginne einen neuen Feldzug, um weiterzuspielen."
 
 #. Save from a newer game version.
 #. English: This campaign was saved by a newer version of the game. Update the game to continue it.

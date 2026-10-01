@@ -6,8 +6,8 @@ Fire-Emblem-sized grids, freely combinable hero + battalion units, base
 building, scouting, and a soul-energy system that decides between liberation
 and tyranny. Design: [`docs/game-design/mechanics-and-core-loop.md`](docs/game-design/mechanics-and-core-loop.md).
 
-**Status: initial architecture.** The project boots, shows a localized main
-menu, and plays a minimal mission (move one unit across a 12×12 grid, avoid
+**Status: initial architecture, placeholder art.** The project boots, shows a localized main
+menu, and plays a minimal mission (move one unit across a 12×12 isometric grid, avoid
 hazards, reach the objective, autosave). Card play, enemies, and the base are
 not built yet — see "Blueprint coverage" in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
@@ -39,7 +39,7 @@ GODOT=/path/to/godot tests/run_tests.sh                 # everything CI runs
 godot --headless --path . res://tests/framework/test_runner.tscn -- --filter=save
 ```
 
-179 Godot tests (unit + integration) and 25 Python automation-client tests,
+186 Godot tests (unit + integration) and 25 Python automation-client tests,
 an end-to-end automation scenario, boot smoke runs, translation key
 extraction, and a locale screenshot tool. See [`docs/TESTING.md`](docs/TESTING.md).
 CI: `.github/workflows/ci.yml`.
@@ -70,6 +70,10 @@ Explained in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | Doc | Topic |
 |---|---|
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | Layers, autoloads, runtime flow, coverage, limitations |
+| [ART_DIRECTION](docs/ART_DIRECTION.md) | Confirmed target art direction, references, benchmarks |
+| [VISUAL_QUALITY_RUBRIC](docs/VISUAL_QUALITY_RUBRIC.md) | Weighted rubric, scores, state matrix, readiness, improvement plan |
+| [ART_IMPLEMENTATION_GUIDE](docs/ART_IMPLEMENTATION_GUIDE.md) | Pixel grid, palette, naming, import, budgets, review process |
+| [UI_STYLE_GUIDE](docs/UI_STYLE_GUIDE.md) | Game UI look: materials, HUD priority, cards, buttons, never-list |
 | [SCENE_TREE_RULES](docs/SCENE_TREE_RULES.md) | Scene ownership, node references, lifetimes |
 | [SIGNALS_AND_EVENTS](docs/SIGNALS_AND_EVENTS.md) | Signal contracts and input actions |
 | [RESOURCES](docs/RESOURCES.md) | Data Resources and content |
@@ -91,5 +95,5 @@ pseudolocalized, right-to-left):
 
 | | |
 |---|---|
-| ![Gameplay](docs/screenshots/en_gameplay.png) | ![German victory](docs/screenshots/de_victory.png) |
+| ![Isometric battle](docs/screenshots/state_battle_start.png) | ![German victory](docs/screenshots/de_victory.png) |
 | ![Pseudolocalized pause](docs/screenshots/pseudo_pause.png) | ![RTL settings](docs/screenshots/rtl_settings.png) |

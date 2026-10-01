@@ -23,6 +23,7 @@ func test_committed_theme_matches_tokens() -> void:
 
 func test_every_button_type_defines_all_interactive_states() -> void:
 	var theme: Theme = ThemeDB.get_project_theme()
+	assert_eq(theme.get_font_size(&"font_size", &"DangerHeadingLabel"), theme.get_font_size(&"font_size", &"HeadingLabel"), "result titles keep heading size")
 	for type_name: StringName in [&"Button", &"PrimaryButton", &"DangerButton", &"OptionButton"]:
 		for state: StringName in [&"normal", &"hover", &"pressed", &"hover_pressed", &"disabled", &"focus",
 				&"normal_mirrored", &"hover_mirrored", &"pressed_mirrored", &"disabled_mirrored"]:

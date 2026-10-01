@@ -31,7 +31,7 @@ func _ready() -> void:
 func on_opened(context: Dictionary) -> void:
 	var victory: bool = context.get("victory", false)
 	title_label.text = "RESULT_VICTORY_TITLE" if victory else "RESULT_DEFEAT_TITLE"
-	title_label.theme_type_variation = &"SuccessLabel" if victory else &"DangerLabel"
+	title_label.theme_type_variation = &"SuccessHeadingLabel" if victory else &"DangerHeadingLabel"
 	body_label.text = "RESULT_VICTORY_BODY" if victory else "RESULT_DEFEAT_BODY"
 	rewards_label.text = format_rewards(context.get("rewards", {}))
 	rewards_label.visible = not rewards_label.text.is_empty()

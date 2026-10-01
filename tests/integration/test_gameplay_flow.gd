@@ -55,6 +55,19 @@ func test_defeat_shows_retry_and_does_not_save() -> void:
 	assert_false(SaveService.has_save())
 
 
+func test_move_range_is_highlighted_and_hidden_when_unit_cannot_act() -> void:
+	var gameplay: Node = await _enter_gameplay()
+	var grid: BattleGrid = gameplay.get("grid")
+	var expected: Array[Vector2i] = [Vector2i(1, 9), Vector2i(1, 11), Vector2i(0, 10), Vector2i(2, 10)]
+	assert_eq(grid.move_highlights.size(), 4)
+	for cell: Vector2i in expected:
+		assert_contains(grid.move_highlights, cell)
+	gameplay.call("open_pause_menu")
+	assert_empty(grid.move_highlights, "no move hints while paused")
+	(gameplay.get("screen_stack") as ScreenStack).pop()
+	assert_eq(grid.move_highlights.size(), 4)
+
+
 func test_pause_menu_pauses_and_resumes() -> void:
 	var gameplay: Node = await _enter_gameplay()
 	var stack: ScreenStack = gameplay.get("screen_stack")

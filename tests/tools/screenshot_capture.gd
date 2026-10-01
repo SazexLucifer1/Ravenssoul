@@ -24,7 +24,29 @@ func _ready() -> void:
 	get_tree().current_scene = placeholder
 	for variant: String in VARIANTS:
 		await _capture_variant(variant)
+	await _capture_extra_states()
 	get_tree().quit()
+
+
+## English-only states for the visual-state matrix (docs/VISUAL_QUALITY_RUBRIC.md).
+func _capture_extra_states() -> void:
+	TranslationServer.set_locale("en")
+	TranslationServer.pseudolocalization_enabled = false
+	get_tree().root.set_layout_direction(Window.LAYOUT_DIRECTION_APPLICATION_LOCALE)
+	GameSession.start_new_campaign()
+	await SceneRouter.goto(Routes.GAMEPLAY)
+	var gameplay: Node = get_tree().current_scene
+	await _shot("state", "battle_start")
+	gameplay.call("open_pause_menu")
+	(gameplay.get("screen_stack") as ScreenStack).top().call("emit_signal", "abandon_requested")
+	await _shot("state", "confirm_abandon")
+	(gameplay.get("screen_stack") as ScreenStack).clear()
+	(gameplay.get("player_unit") as Character).health.apply_damage(999)
+	await _shot("state", "defeat")
+	(SaveService.backend as MemorySaveBackend).slots[SaveService.DEFAULT_SLOT] = "{damaged"
+	await SceneRouter.goto(Routes.MAIN_MENU)
+	(get_tree().current_scene.get("continue_button") as GameButton).pressed.emit()
+	await _shot("state", "load_failed")
 
 
 func _capture_variant(variant: String) -> void:

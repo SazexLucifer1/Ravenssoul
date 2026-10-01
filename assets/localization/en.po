@@ -273,7 +273,7 @@ msgstr "No saved campaign was found. Start a new campaign to begin."
 
 #. Save file unreadable.
 msgid "SAVE_ERROR_CORRUPTED"
-msgstr "Your saved campaign is damaged and can't be loaded. A backup may be restored automatically in a future update; for now, start a new campaign."
+msgstr "Your saved campaign is damaged and can't be loaded. Your settings are not affected. Start a new campaign to keep playing."
 
 #. Save from a newer game version.
 msgid "SAVE_ERROR_VERSION_TOO_NEW"

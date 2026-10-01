@@ -109,6 +109,21 @@ by hand-editing `utopia_theme.tres`. Details: `docs/UI_ARCHITECTURE.md`.
 - Automation exchanges ids and translation keys, never localized text.
 - Details and how-tos: `docs/AUTOMATION.md`.
 
+## Art and visual quality
+
+- Follow `docs/ART_DIRECTION.md` (confirmed target), `docs/ART_IMPLEMENTATION_GUIDE.md`
+  (grid, palette, naming, import, budgets), and `docs/UI_STYLE_GUIDE.md`.
+- Isometric projection lives only in `BattleGrid.cell_to_local/local_to_cell`;
+  the gameplay camera zoom stays an integer; pixel art uses nearest filtering
+  and integer positions (tests in `tests/unit/art/`).
+- Soul teal (`#5fc9c0` ramp) is reserved for soul energy; never use it for decoration.
+- Score visual changes with `docs/VISUAL_QUALITY_RUBRIC.md` from in-engine
+  captures (screenshot tool), update the state matrix, and never score states
+  you did not capture (mark N/E). Third-party reference images are not
+  committed to the repository.
+- AI-generated imagery is concept-only; shipped art must meet the guide's grid,
+  palette, and proportion rules.
+
 ## Gameplay rules vs. visuals
 
 The logical grid is the source of truth. Rules resolve first and never wait

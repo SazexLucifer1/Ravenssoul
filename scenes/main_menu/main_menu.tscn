@@ -34,7 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.078431375, 0.08627451, 0.10980392, 1)
+color = Color(0.08627451, 0.0627451, 0.047058824, 1)
 
 [node name="EmberBand" type="ColorRect" parent="."]
 layout_mode = 1

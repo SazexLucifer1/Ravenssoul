@@ -35,7 +35,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.078431375, 0.08627451, 0.10980392, 1)
+color = Color(0.08627451, 0.0627451, 0.047058824, 1)
 
 [node name="World" type="Node2D" parent="."]
 
@@ -43,8 +43,10 @@ color = Color(0.078431375, 0.08627451, 0.10980392, 1)
 script = ExtResource("7")
 
 [node name="Units" type="Node2D" parent="World/BattleGrid"]
+y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="World"]
+zoom = Vector2(2, 2)
 
 [node name="PlayerUnitController" type="Node" parent="." node_paths=PackedStringArray("grid")]
 script = ExtResource("8")

@@ -30,6 +30,15 @@ Collision layer names are reserved in `project.godot`
 editor use; no bodies use them today. If a convex/concave shape is ever
 proposed, it needs an ADR explaining why grid math is insufficient.
 
+## Isometric projection
+
+Battles are drawn isometrically (ADR 0010) but all rules stay in integer
+cell space. `BattleGrid.cell_to_local` (cell → 2:1 diamond centre, 32×16 art
+px) and `BattleGrid.local_to_cell` (inverse, used for pointer picking) are
+the only projection code; tests check the round trip for every cell and
+that points inside a diamond pick that cell. Units are y-sorted by their
+cell centre for correct overlap.
+
 ## Rules
 
 - **Source of truth**: `BattleGrid` occupancy + `BattleMapData`. Visual

@@ -25,6 +25,13 @@ static func build(t: UiTokens) -> Theme:
 	theme.set_color(&"font_color", &"DangerLabel", t.danger)
 	_variation(theme, &"SuccessLabel", &"Label")
 	theme.set_color(&"font_color", &"SuccessLabel", t.success)
+	# Result titles keep heading size while using semantic color.
+	_variation(theme, &"SuccessHeadingLabel", &"Label")
+	theme.set_font_size(&"font_size", &"SuccessHeadingLabel", t.font_size_heading)
+	theme.set_color(&"font_color", &"SuccessHeadingLabel", t.success)
+	_variation(theme, &"DangerHeadingLabel", &"Label")
+	theme.set_font_size(&"font_size", &"DangerHeadingLabel", t.font_size_heading)
+	theme.set_color(&"font_color", &"DangerHeadingLabel", t.danger)
 	_variation(theme, &"KeycapLabel", &"Label")
 	theme.set_font_size(&"font_size", &"KeycapLabel", t.font_size_small)
 	theme.set_stylebox(&"normal", &"KeycapLabel", _box(t.surface_raised, t.border, t.border_width, t.corner_radius, t.spacing_s, t.spacing_xs))

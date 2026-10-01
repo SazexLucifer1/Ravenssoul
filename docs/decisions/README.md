@@ -14,6 +14,7 @@ One file per decision: `NNNN-short-title.md`. Never delete; mark as
 | [0007](0007-generated-theme-from-tokens.md) | Theme generated from design tokens | Accepted |
 | [0008](0008-remote-automation-architecture.md) | Remote automation: JSON-RPC protocol, engine adapter, opt-in server | Accepted |
 | [0009](0009-automation-security-model.md) | Automation security model | Accepted |
+| [0010](0010-isometric-battles-and-pixel-scale.md) | Isometric battles, 640×360 pixel art frame, integer scaling | Accepted |
 
 ## Template
 

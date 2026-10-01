@@ -31,7 +31,7 @@ func _ready() -> void:
 		GameSession.start_new_campaign()
 	mission = GameSession.active_mission
 	grid.map_data = mission.map
-	camera.position = grid.position + grid.pixel_size() * 0.5
+	camera.position = grid.position + grid.world_bounds().get_center()
 
 	player_unit = character_scene.instantiate() as Character
 	units_root.add_child(player_unit)
@@ -47,6 +47,8 @@ func _ready() -> void:
 	controller.objective_reached.connect(func(_cell: Vector2i) -> void: _finish(true))
 	player_unit.defeated.connect(func() -> void: _finish(false))
 	hud.bind(player_unit, mission)
+	controller.stepped.connect(func(_cell: Vector2i) -> void: _refresh_move_highlights())
+	_refresh_move_highlights()
 	screen_stack.emptied.connect(_on_stack_emptied)
 
 
@@ -65,6 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func open_pause_menu() -> void:
 	get_tree().paused = true
 	controller.enabled = false
+	grid.set_move_highlights([] as Array[Vector2i])
 	var menu: PauseMenu = pause_menu_scene.instantiate()
 	menu.resume_requested.connect(screen_stack.pop)
 	menu.settings_requested.connect(func() -> void: screen_stack.push(settings_screen_scene.instantiate()))
@@ -87,6 +90,17 @@ func _confirm_abandon() -> void:
 func _on_stack_emptied() -> void:
 	get_tree().paused = false
 	controller.enabled = not _finished
+	_refresh_move_highlights()
+
+
+## Blue diamonds on the cells the unit can step to (readability, rubric cat. 10).
+func _refresh_move_highlights() -> void:
+	var cells: Array[Vector2i] = []
+	if controller.enabled and not player_unit.is_defeated():
+		for direction: Vector2i in PlayerUnitController.DIRECTIONS.values():
+			if grid.can_enter(player_unit.cell + direction):
+				cells.append(player_unit.cell + direction)
+	grid.set_move_highlights(cells)
 
 
 func _finish(victory: bool) -> void:
@@ -94,6 +108,7 @@ func _finish(victory: bool) -> void:
 		return
 	_finished = true
 	controller.enabled = false
+	grid.set_move_highlights([] as Array[Vector2i])
 	var rewards: Dictionary = GameSession.complete_mission(mission) if victory else {}
 	var screen: MissionResultScreen = result_screen_scene.instantiate()
 	screen.continue_requested.connect(func() -> void: SceneRouter.goto(Routes.MAIN_MENU))

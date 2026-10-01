@@ -81,3 +81,23 @@ func test_objective_signal() -> void:
 	controller.objective_reached.connect(func(c: Vector2i) -> void: reached.append(c))
 	controller.try_step(Vector2i.RIGHT)
 	assert_eq(reached, [MAP.objective_cell] as Array[Vector2i])
+
+
+func test_isometric_projection_is_2_to_1() -> void:
+	var grid := _grid()
+	var origin: Vector2 = grid.cell_to_local(Vector2i.ZERO)
+	assert_eq(grid.cell_to_local(Vector2i(1, 0)) - origin, Vector2(16, 8), "+x goes down-right")
+	assert_eq(grid.cell_to_local(Vector2i(0, 1)) - origin, Vector2(-16, 8), "+y goes down-left")
+	assert_eq(BattleGrid.TILE_SIZE.x, BattleGrid.TILE_SIZE.y * 2)
+
+
+func test_every_cell_round_trips_and_fits_the_bounds() -> void:
+	var grid := _grid()
+	var bounds: Rect2 = grid.world_bounds()
+	for y: int in MAP.size.y:
+		for x: int in MAP.size.x:
+			var center: Vector2 = grid.cell_to_local(Vector2i(x, y))
+			assert_eq(grid.local_to_cell(center), Vector2i(x, y))
+			assert_eq(grid.local_to_cell(center + Vector2(5, 2)), Vector2i(x, y), "points inside the diamond pick the cell")
+			assert_true(bounds.has_point(center))
+	assert_true(bounds.size.x <= 640 and bounds.size.y <= 360, "a 12x12 map fits the 640x360 art frame")

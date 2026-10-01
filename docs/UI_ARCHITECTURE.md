@@ -38,16 +38,18 @@ theme.
 | `UiMotion` | Transition/press durations honoring reduced motion |
 
 Theme type variations: `PrimaryButton`, `DangerButton`, `TitleLabel`,
-`HeadingLabel`, `MutedLabel`, `DangerLabel`, `SuccessLabel`, `KeycapLabel`,
+`HeadingLabel`, `MutedLabel`, `DangerLabel`, `SuccessLabel`,
+`DangerHeadingLabel`, `SuccessHeadingLabel`, `KeycapLabel`,
 `HudPanel`, `HealthBar`, `SoulBar`.
 
-### Art direction tokens ("Ash & Ember", provisional)
+### Art direction tokens
 
-Dark iron surfaces (`#14161c`, `#1f222b`, `#2a2e39`), parchment text
-(`#ece6d6`), revolution-ember accent for primary actions (`#b8452f`),
-spectral teal reserved for soul energy (`#5fc9c0`), gold focus ring
-(`#f2c14e`) that is distinct from hover. Angular 4 px corners. Final art
-(fonts, frames, icons) replaces tokens/styleboxes, not screen code.
+Warm wood / brass / parchment with darker undertones (approved art
+direction). Palette, materials, typography, icon language, card and HUD
+rules, and the "must never look like" list are in
+[UI_STYLE_GUIDE.md](UI_STYLE_GUIDE.md); token values live in
+`core/ui/theme/ui_tokens.tres`. Final art (fonts, frames, icons) replaces
+tokens/styleboxes, not screen code.
 
 ## Button states
 

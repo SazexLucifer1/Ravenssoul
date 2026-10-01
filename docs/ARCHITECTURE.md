@@ -14,7 +14,7 @@ recorded in [`decisions/`](decisions/).
 | Language | Typed GDScript | Beginner-friendly; `untyped_declaration` warning is enabled. |
 | Platforms | Windows, Linux (x86_64) | `export_presets.cfg`: Windows and Linux release presets (exclude `automation/`), plus "Linux QA (automation)" with the `automation_qa` feature. |
 | Multiplayer | None | `networking/` is reserved (see its README). |
-| Base resolution | 1280×720, `canvas_items` stretch, `expand` aspect | Scales to 1080p/1440p, ultrawide adds width. |
+| Base resolution | 1280×720 UI canvas, `canvas_items` stretch, `expand` aspect; world art in a 640×360 frame via gameplay camera zoom 2 | Scales to 1080p/1440p (integer for pixel art), ultrawide adds width. Nearest filtering + pixel snapping (ADR 0010). |
 
 ## Folder layout
 
@@ -95,7 +95,7 @@ constants, never scene paths.
 | Hero + battalion combination (stats add, 5+15 deck) | **Implemented** as data + tests: `UnitStats.combine`, `UnitLoadout`, `HeroData`, `BattalionData` |
 | Cards, AP, hand, draw | `CardData` + `Deck` (seeded draw/discard/reshuffle). AP spending and card effects: **not yet** |
 | Speed turn order | `TurnOrder.sort_by_speed` only; no round loop yet |
-| Tactical grid (12–16 tiles) | `BattleMapData` (validated size), `BattleGrid` occupancy + legality, one 12×12 map |
+| Tactical grid (12–16 tiles) | `BattleMapData` (validated size), `BattleGrid` occupancy + legality + isometric projection (ADR 0010) and move-range highlights, one 12×12 map |
 | Morale | Stat exists; no rules yet |
 | Missions/objectives | `MissionData`; REACH objective playable |
 | Rewards/resources | `ResourceWallet`; mission rewards applied and saved |
@@ -124,7 +124,7 @@ movement arrives it calls the same `PlayerUnitController.try_step` /
 ## Known limitations
 
 - No enemies, AP economy, or card play yet; the battle is a movement slice.
-- Placeholder art drawn in code (`UnitVisual`, `BattleGrid._draw`).
+- Placeholder art drawn in code (`UnitVisual`, `BattleGrid._draw`); art direction, quality bar, and production rules are in [ART_DIRECTION.md](ART_DIRECTION.md), [VISUAL_QUALITY_RUBRIC.md](VISUAL_QUALITY_RUBRIC.md) (current AAA visual-readiness 32 %), [ART_IMPLEMENTATION_GUIDE.md](ART_IMPLEMENTATION_GUIDE.md), [UI_STYLE_GUIDE.md](UI_STYLE_GUIDE.md).
 - Text glyphs for input prompts (no icon set yet).
 - Engine default font only: covers Latin incl. German; **not** CJK/Arabic.
 - Export presets exist but exports were not built (no export templates in CI).
