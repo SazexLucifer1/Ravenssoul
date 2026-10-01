@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/gameplay.gd" id="1"]
+[ext_resource type="PackedScene" path="res://features/characters/character.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/menus/pause/pause_menu.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/menus/settings/settings_screen.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/menus/mission_result/mission_result_screen.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://core/ui/screens/confirm_dialog.tscn" id="6"]
+[ext_resource type="Script" path="res://features/combat/grid/battle_grid.gd" id="7"]
+[ext_resource type="Script" path="res://features/combat/player_unit_controller.gd" id="8"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/hud/hud.tscn" id="9"]
+[ext_resource type="Script" path="res://core/ui/screens/screen_stack.gd" id="10"]
+
+[node name="Gameplay" type="Node" node_paths=PackedStringArray("grid", "units_root", "camera", "controller", "hud", "screen_stack")]
+script = ExtResource("1")
+character_scene = ExtResource("2")
+pause_menu_scene = ExtResource("3")
+settings_screen_scene = ExtResource("4")
+result_screen_scene = ExtResource("5")
+confirm_dialog_scene = ExtResource("6")
+grid = NodePath("World/BattleGrid")
+units_root = NodePath("World/BattleGrid/Units")
+camera = NodePath("World/Camera2D")
+controller = NodePath("PlayerUnitController")
+hud = NodePath("Hud")
+screen_stack = NodePath("UiLayer/ScreenStack")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Color" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.078431375, 0.08627451, 0.10980392, 1)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="BattleGrid" type="Node2D" parent="World"]
+script = ExtResource("7")
+
+[node name="Units" type="Node2D" parent="World/BattleGrid"]
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+
+[node name="PlayerUnitController" type="Node" parent="." node_paths=PackedStringArray("grid")]
+script = ExtResource("8")
+grid = NodePath("../World/BattleGrid")
+
+[node name="Hud" parent="." instance=ExtResource("9")]
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 10
+
+[node name="ScreenStack" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10")

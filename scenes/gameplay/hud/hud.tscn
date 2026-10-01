@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/hud/hud.gd" id="1"]
+[ext_resource type="Script" path="res://features/characters/ui/health_bar.gd" id="2"]
+[ext_resource type="Script" path="res://core/ui/components/safe_area_container.gd" id="3"]
+[ext_resource type="Script" path="res://core/ui/components/action_prompt.gd" id="4"]
+
+[node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("unit_name_label", "health_bar", "mission_title_label", "objective_label", "hint_label")]
+script = ExtResource("1")
+unit_name_label = NodePath("SafeArea/Layout/Top/UnitPanel/Content/UnitName")
+health_bar = NodePath("SafeArea/Layout/Top/UnitPanel/Content/HealthBar")
+mission_title_label = NodePath("SafeArea/Layout/Top/MissionPanel/Content/MissionTitle")
+objective_label = NodePath("SafeArea/Layout/Top/MissionPanel/Content/Objective")
+hint_label = NodePath("SafeArea/Layout/Bottom/Hint")
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3")
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Top" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="UnitPanel" type="PanelContainer" parent="SafeArea/Layout/Top"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"HudPanel"
+
+[node name="Content" type="VBoxContainer" parent="SafeArea/Layout/Top/UnitPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="UnitName" type="Label" parent="SafeArea/Layout/Top/UnitPanel/Content"]
+layout_mode = 2
+theme_type_variation = &"HeadingLabel"
+autowrap_mode = 3
+
+[node name="HealthCaption" type="Label" parent="SafeArea/Layout/Top/UnitPanel/Content"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = "HUD_HEALTH_LABEL"
+
+[node name="HealthBar" type="ProgressBar" parent="SafeArea/Layout/Top/UnitPanel/Content"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2")
+
+[node name="Spacer" type="Control" parent="SafeArea/Layout/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MissionPanel" type="PanelContainer" parent="SafeArea/Layout/Top"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"HudPanel"
+
+[node name="Content" type="VBoxContainer" parent="SafeArea/Layout/Top/MissionPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MissionTitle" type="Label" parent="SafeArea/Layout/Top/MissionPanel/Content"]
+layout_mode = 2
+theme_type_variation = &"HeadingLabel"
+autowrap_mode = 3
+
+[node name="Objective" type="Label" parent="SafeArea/Layout/Top/MissionPanel/Content"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="Fill" type="Control" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Bottom" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MovePrompt" type="HBoxContainer" parent="SafeArea/Layout/Bottom"]
+layout_mode = 2
+script = ExtResource("4")
+action = &""
+text_key = "HUD_PROMPT_MOVE"
+
+[node name="PausePrompt" type="HBoxContainer" parent="SafeArea/Layout/Bottom"]
+layout_mode = 2
+script = ExtResource("4")
+action = &"pause"
+text_key = "HUD_PROMPT_PAUSE"
+
+[node name="Hint" type="Label" parent="SafeArea/Layout/Bottom"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DangerLabel"
+auto_translate_mode = 2
+horizontal_alignment = 2

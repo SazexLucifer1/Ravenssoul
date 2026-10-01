@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/bootstrap/bootstrap.gd" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+
+[node name="Bootstrap" type="Control" node_paths=PackedStringArray("status_label", "error_panel", "quit_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+status_label = NodePath("Center/Status")
+error_panel = NodePath("Center/ErrorPanel")
+quit_button = NodePath("Center/ErrorPanel/Content/QuitButton")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.078431375, 0.08627451, 0.10980392, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Status" type="Label" parent="Center"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = "BOOT_LOADING"
+
+[node name="ErrorPanel" type="PanelContainer" parent="Center"]
+visible = false
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="Center/ErrorPanel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Center/ErrorPanel/Content"]
+layout_mode = 2
+theme_type_variation = &"HeadingLabel"
+text = "BOOT_ERROR_TITLE"
+autowrap_mode = 3
+
+[node name="Body" type="Label" parent="Center/ErrorPanel/Content"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "BOOT_ERROR_BODY"
+autowrap_mode = 3
+
+[node name="QuitButton" type="Button" parent="Center/ErrorPanel/Content"]
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"PrimaryButton"
+text = "BOOT_ERROR_QUIT"
+script = ExtResource("2")

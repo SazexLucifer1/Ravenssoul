@@ -1,0 +1,14 @@
+# Godot 4 generated data
+.godot/
+/android/
+*.translation
+
+# Exports
+/build/
+/exports/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+.vscode/

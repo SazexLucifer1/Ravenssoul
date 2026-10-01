@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+[ext_resource type="Script" path="res://core/ui/components/safe_area_container.gd" id="3"]
+[ext_resource type="Script" path="res://core/ui/screens/screen_stack.gd" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/menus/settings/settings_screen.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://core/ui/screens/confirm_dialog.tscn" id="6"]
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("layout_root", "new_game_button", "continue_button", "settings_button", "quit_button", "version_label", "screen_stack")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+layout_root = NodePath("SafeArea")
+new_game_button = NodePath("SafeArea/Layout/Buttons/NewGameButton")
+continue_button = NodePath("SafeArea/Layout/Buttons/ContinueButton")
+settings_button = NodePath("SafeArea/Layout/Buttons/SettingsButton")
+quit_button = NodePath("SafeArea/Layout/Buttons/QuitButton")
+version_label = NodePath("SafeArea/Layout/Footer/Version")
+screen_stack = NodePath("ScreenStack")
+settings_screen_scene = ExtResource("5")
+confirm_dialog_scene = ExtResource("6")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.078431375, 0.08627451, 0.10980392, 1)
+
+[node name="EmberBand" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 12.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.72156864, 0.27058825, 0.18431373, 1)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3")
+base_margin = 64
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "GAME_TITLE"
+
+[node name="Tagline" type="Label" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"MutedLabel"
+text = "MAIN_MENU_TAGLINE"
+autowrap_mode = 3
+
+[node name="Gap" type="Control" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ContinueButton" type="Button" parent="SafeArea/Layout/Buttons"]
+custom_minimum_size = Vector2(320, 52)
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "MAIN_MENU_CONTINUE"
+script = ExtResource("2")
+busy_text_key = "UI_LOADING_SHORT"
+
+[node name="NewGameButton" type="Button" parent="SafeArea/Layout/Buttons"]
+custom_minimum_size = Vector2(320, 52)
+layout_mode = 2
+text = "MAIN_MENU_NEW_GAME"
+script = ExtResource("2")
+busy_text_key = "UI_LOADING_SHORT"
+
+[node name="SettingsButton" type="Button" parent="SafeArea/Layout/Buttons"]
+custom_minimum_size = Vector2(320, 52)
+layout_mode = 2
+text = "MENU_SETTINGS"
+script = ExtResource("2")
+
+[node name="QuitButton" type="Button" parent="SafeArea/Layout/Buttons"]
+custom_minimum_size = Vector2(320, 52)
+layout_mode = 2
+text = "MAIN_MENU_QUIT"
+script = ExtResource("2")
+
+[node name="Fill" type="Control" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Footer" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+
+[node name="Version" type="Label" parent="SafeArea/Layout/Footer"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+auto_translate_mode = 2
+
+[node name="ScreenStack" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4")

@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://features/characters/character.gd" id="1"]
+[ext_resource type="Script" path="res://features/characters/unit_visual.gd" id="2"]
+[ext_resource type="Script" path="res://core/components/health_component.gd" id="3"]
+[ext_resource type="Script" path="res://features/characters/grid_mover.gd" id="4"]
+[ext_resource type="Script" path="res://features/characters/character_animator.gd" id="5"]
+[ext_resource type="AnimationLibrary" path="res://features/characters/animations/unit_animations.tres" id="6"]
+
+[node name="Character" type="Node2D" node_paths=PackedStringArray("health", "mover", "animator", "visual")]
+script = ExtResource("1")
+health = NodePath("HealthComponent")
+mover = NodePath("GridMover")
+animator = NodePath("CharacterAnimator")
+visual = NodePath("Visual")
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="GridMover" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("4")
+body = NodePath("..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"unit": ExtResource("6")
+}
+
+[node name="CharacterAnimator" type="Node" parent="." node_paths=PackedStringArray("player", "health", "mover", "visual")]
+script = ExtResource("5")
+player = NodePath("../AnimationPlayer")
+health = NodePath("../HealthComponent")
+mover = NodePath("../GridMover")
+visual = NodePath("../Visual")

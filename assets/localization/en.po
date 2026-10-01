@@ -1,0 +1,356 @@
+# Utopia — English (source) catalog.
+# Translator notes are the "#." comments. Keep {placeholders} unchanged.
+msgid ""
+msgstr ""
+"Project-Id-Version: Utopia\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Name of this language, written in this language. Shown in the language picker.
+msgid "LANGUAGE_ENDONYM"
+msgstr "English"
+
+#. Game title on the title screen.
+msgid "GAME_TITLE"
+msgstr "Utopia"
+
+#. Title screen subtitle. Wraps to at most two lines.
+msgid "MAIN_MENU_TAGLINE"
+msgstr "The kingdom's perfect peace has a price. Raise the banner of revolt."
+
+#. Button: resume the saved campaign.
+msgid "MAIN_MENU_CONTINUE"
+msgstr "Continue"
+
+#. Button: start a new campaign.
+msgid "MAIN_MENU_NEW_GAME"
+msgstr "New Campaign"
+
+#. Button: close the game.
+msgid "MAIN_MENU_QUIT"
+msgstr "Quit Game"
+
+#. Footer. {version} is the build number, e.g. 0.1.0.
+msgid "MAIN_MENU_VERSION"
+msgstr "Version {version}"
+
+#. Button: open the settings screen.
+msgid "MENU_SETTINGS"
+msgstr "Settings"
+
+#. Generic button label while an action is in progress.
+msgid "UI_BUSY"
+msgstr "Working…"
+
+#. Button label while the next scene loads.
+msgid "UI_LOADING_SHORT"
+msgstr "Loading…"
+
+#. Generic cancel button.
+msgid "UI_CANCEL"
+msgstr "Cancel"
+
+#. Generic confirm button.
+msgid "UI_CONFIRM"
+msgstr "Confirm"
+
+#. Acknowledge button on a message.
+msgid "UI_OK"
+msgstr "OK"
+
+#. Close the current screen.
+msgid "UI_BACK"
+msgstr "Back"
+
+#. Fallback confirmation title.
+msgid "CONFIRM_TITLE_DEFAULT"
+msgstr "Are you sure?"
+
+#. Dialog title when starting over with an existing save.
+msgid "CONFIRM_NEW_GAME_TITLE"
+msgstr "Start a new campaign?"
+
+#. Warns that the saved campaign is replaced on the next save.
+msgid "CONFIRM_NEW_GAME_BODY"
+msgstr "Your current campaign will be replaced the next time the game saves. This can't be undone."
+
+#. Destructive confirm button.
+msgid "CONFIRM_NEW_GAME_ACCEPT"
+msgstr "Start Over"
+
+#. Dialog title when a save cannot be loaded.
+msgid "LOAD_FAILED_TITLE"
+msgstr "Couldn't continue your campaign"
+
+#. Dialog title for leaving a mission early.
+msgid "CONFIRM_ABANDON_TITLE"
+msgstr "Abandon this mission?"
+
+#. Explains what is lost when leaving.
+msgid "CONFIRM_ABANDON_BODY"
+msgstr "You'll return to the title screen. Progress in this mission will be lost; your last saved campaign is safe."
+
+#. Destructive confirm: leave the mission.
+msgid "CONFIRM_ABANDON_ACCEPT"
+msgstr "Abandon Mission"
+
+#. Stay in the mission.
+msgid "CONFIRM_ABANDON_DECLINE"
+msgstr "Keep Fighting"
+
+#. Shown while the game starts.
+msgid "BOOT_LOADING"
+msgstr "Preparing the rebellion…"
+
+#. Startup failed.
+msgid "BOOT_ERROR_TITLE"
+msgstr "The game couldn't start"
+
+#. Startup failure explanation and next step.
+msgid "BOOT_ERROR_BODY"
+msgstr "Some game files are missing or damaged. Your saved progress has not been changed. Please verify or reinstall the game, then try again."
+
+#. Close the game after a startup error.
+msgid "BOOT_ERROR_QUIT"
+msgstr "Close Game"
+
+#. Settings screen heading.
+msgid "SETTINGS_TITLE"
+msgstr "Settings"
+
+#. Label for the language picker.
+msgid "SETTINGS_LANGUAGE"
+msgstr "Language"
+
+#. Label for the text size picker.
+msgid "SETTINGS_TEXT_SIZE"
+msgstr "Text size"
+
+#. Text size option.
+msgid "SETTINGS_TEXT_SIZE_DEFAULT"
+msgstr "Default"
+
+#. Text size option.
+msgid "SETTINGS_TEXT_SIZE_LARGE"
+msgstr "Large"
+
+#. Text size option.
+msgid "SETTINGS_TEXT_SIZE_LARGEST"
+msgstr "Largest"
+
+#. Accessibility toggle that removes screen shake and slides.
+msgid "SETTINGS_REDUCED_MOTION"
+msgstr "Reduce motion"
+
+#. Explains that settings need no save button.
+msgid "SETTINGS_SAVED_AUTOMATICALLY"
+msgstr "Changes apply immediately and are saved automatically."
+
+#. Pause menu heading.
+msgid "PAUSE_TITLE"
+msgstr "Paused"
+
+#. Close the pause menu.
+msgid "PAUSE_RESUME"
+msgstr "Resume"
+
+#. Leave the mission (asks for confirmation).
+msgid "PAUSE_ABANDON"
+msgstr "Abandon Mission"
+
+#. Caption above the health bar.
+msgid "HUD_HEALTH_LABEL"
+msgstr "Health"
+
+#. Health bar text. {current} and {max} are formatted numbers.
+msgid "HUD_HEALTH_VALUE"
+msgstr "{current} / {max}"
+
+#. Control hint for movement.
+msgid "HUD_PROMPT_MOVE"
+msgstr "Move: arrow keys or D-pad"
+
+#. Control hint shown next to the pause key glyph.
+msgid "HUD_PROMPT_PAUSE"
+msgstr "Pause"
+
+#. Shown when a move is refused.
+msgid "HUD_HINT_BLOCKED"
+msgstr "You can't move there."
+
+#. Unit stepped on a hazard. {amount} is a number.
+msgid "HUD_HINT_HAZARD"
+msgid_plural "HUD_HINT_HAZARD_PLURAL"
+msgstr[0] "Hazard! You lost {amount} health point."
+msgstr[1] "Hazard! You lost {amount} health points."
+
+#. Mission won.
+msgid "RESULT_VICTORY_TITLE"
+msgstr "Mission Complete"
+
+#. Mission lost.
+msgid "RESULT_DEFEAT_TITLE"
+msgstr "Mission Failed"
+
+#. Victory text.
+msgid "RESULT_VICTORY_BODY"
+msgstr "Your band reached the rally point. Word of the uprising spreads."
+
+#. Defeat text with next step.
+msgid "RESULT_DEFEAT_BODY"
+msgstr "Your unit has fallen. Your saved campaign is unchanged. Try the mission again or return to the title screen."
+
+#. Leave the result screen after a victory.
+msgid "RESULT_CONTINUE"
+msgstr "Continue"
+
+#. Return to the title screen.
+msgid "RESULT_RETURN_TO_MENU"
+msgstr "Title Screen"
+
+#. Restart the mission.
+msgid "RESULT_RETRY"
+msgstr "Try Again"
+
+#. Rewards summary. {list} is a list of reward lines.
+msgid "RESULT_REWARDS"
+msgstr "Rewards: {list}"
+
+#. One reward. {amount} is a number, {resource} a resource name.
+msgid "REWARD_LINE"
+msgstr "{amount} {resource}"
+
+#. Separator between list items, including spaces.
+msgid "LIST_SEPARATOR"
+msgstr ", "
+
+#. Resource name.
+msgid "RESOURCE_WOOD"
+msgstr "Wood"
+
+#. Resource name.
+msgid "RESOURCE_STONE"
+msgstr "Stone"
+
+#. Resource name.
+msgid "RESOURCE_FOOD"
+msgstr "Food"
+
+#. Resource name.
+msgid "RESOURCE_GOLD"
+msgstr "Gold"
+
+#. Resource name. Corrupting power source; keep it ominous.
+msgid "RESOURCE_SOUL_ENERGY"
+msgstr "Soul Energy"
+
+#. Generic save success.
+msgid "SAVE_STATUS_OK"
+msgstr "Done."
+
+#. Autosave in progress.
+msgid "SAVE_STATUS_SAVING"
+msgstr "Saving your progress… Please don't close the game."
+
+#. Short button label while saving.
+msgid "SAVE_STATUS_SAVING_SHORT"
+msgstr "Saving…"
+
+#. Autosave succeeded.
+msgid "SAVE_STATUS_SAVED"
+msgstr "Progress saved."
+
+#. Retry a failed save.
+msgid "SAVE_TRY_AGAIN"
+msgstr "Try Saving Again"
+
+#. No save exists.
+msgid "SAVE_ERROR_NOT_FOUND"
+msgstr "No saved campaign was found. Start a new campaign to begin."
+
+#. Save file unreadable.
+msgid "SAVE_ERROR_CORRUPTED"
+msgstr "Your saved campaign is damaged and can't be loaded. A backup may be restored automatically in a future update; for now, start a new campaign."
+
+#. Save from a newer game version.
+msgid "SAVE_ERROR_VERSION_TOO_NEW"
+msgstr "This campaign was saved by a newer version of the game. Update the game to continue it."
+
+#. Disk read failed.
+msgid "SAVE_ERROR_READ_FAILED"
+msgstr "Your saved campaign couldn't be read. Check that the game can access its save folder, then try again."
+
+#. Disk write failed. Previous save is kept.
+msgid "SAVE_ERROR_WRITE_FAILED"
+msgstr "Your progress couldn't be saved. Your previous save is still safe. Free up disk space or check folder permissions, then try again."
+
+#. Internal slot problem, explained plainly.
+msgid "SAVE_ERROR_INVALID_SLOT"
+msgstr "That save slot can't be used. Your other saves are unaffected."
+
+#. Hero display name. Former royal soldier.
+msgid "HERO_DESERTER_NAME"
+msgstr "Kestrel Vane"
+
+#. Battalion type name.
+msgid "BATTALION_MILITIA_NAME"
+msgstr "Free Militia"
+
+#. Card name (move).
+msgid "CARD_MARCH_NAME"
+msgstr "March"
+
+#. Card rules text.
+msgid "CARD_MARCH_DESC"
+msgstr "Move up to 2 tiles."
+
+#. Card name (attack).
+msgid "CARD_STRIKE_NAME"
+msgstr "Strike"
+
+#. Card rules text.
+msgid "CARD_STRIKE_DESC"
+msgstr "Deal 3 physical damage to an adjacent enemy."
+
+#. Card name (defend).
+msgid "CARD_GUARD_NAME"
+msgstr "Guard"
+
+#. Card rules text.
+msgid "CARD_GUARD_DESC"
+msgstr "Block the next 2 damage this round."
+
+#. Card name (buff).
+msgid "CARD_RALLY_NAME"
+msgstr "Rally"
+
+#. Card rules text.
+msgid "CARD_RALLY_DESC"
+msgstr "Gain 1 morale and act earlier next round."
+
+#. Hero signature card.
+msgid "CARD_DESERTERS_RESOLVE_NAME"
+msgstr "Deserter's Resolve"
+
+#. Card rules text.
+msgid "CARD_DESERTERS_RESOLVE_DESC"
+msgstr "Deal 4 physical damage. If your morale is high, draw a card."
+
+#. Mission name.
+msgid "MISSION_FIRST_SPARK_TITLE"
+msgstr "The First Spark"
+
+#. Mission objective, imperative.
+msgid "MISSION_FIRST_SPARK_OBJECTIVE"
+msgstr "Reach the golden rally point. Avoid the burning ground."
+
+#. Dialog title when a screen fails to open.
+msgid "ROUTE_FAILED_TITLE"
+msgstr "Something went wrong"
+
+#. Explains a failed screen change; progress is unaffected.
+msgid "ROUTE_FAILED_BODY"
+msgstr "That part of the game couldn't be opened. Your saved progress is safe. Please try again; if it keeps happening, verify or reinstall the game."

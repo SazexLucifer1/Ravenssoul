@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RosterCatalog" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://features/characters/data/roster_catalog.gd" id="1"]
+[ext_resource type="Resource" path="res://features/characters/content/hero_deserter.tres" id="2"]
+[ext_resource type="Resource" path="res://features/characters/content/battalion_militia.tres" id="3"]
+[ext_resource type="Script" path="res://features/characters/data/hero_data.gd" id="4"]
+[ext_resource type="Script" path="res://features/characters/data/battalion_data.gd" id="5"]
+
+[resource]
+script = ExtResource("1")
+heroes = Array[ExtResource("4")]([ExtResource("2")])
+battalions = Array[ExtResource("5")]([ExtResource("3")])
+default_hero = ExtResource("2")
+default_battalion = ExtResource("3")

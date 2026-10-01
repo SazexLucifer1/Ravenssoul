@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattleMapData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/combat/data/battle_map_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"map_training_ground"
+size = Vector2i(12, 12)
+blocked_cells = Array[Vector2i]([Vector2i(4, 3), Vector2i(4, 4), Vector2i(4, 5), Vector2i(4, 6), Vector2i(7, 6), Vector2i(7, 7), Vector2i(7, 8), Vector2i(8, 8), Vector2i(2, 9), Vector2i(3, 9)])
+hazard_cells = Array[Vector2i]([Vector2i(5, 8), Vector2i(6, 2), Vector2i(9, 4), Vector2i(9, 5)])
+hazard_damage = 4
+player_spawn = Vector2i(1, 10)
+objective_cell = Vector2i(10, 1)

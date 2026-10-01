@@ -1,0 +1,442 @@
+# Utopia — German catalog.
+# Translator notes are the "#." comments. Keep {placeholders} unchanged.
+msgid ""
+msgstr ""
+"Project-Id-Version: Utopia\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Name of this language, written in this language. Shown in the language picker.
+#. English: English
+msgid "LANGUAGE_ENDONYM"
+msgstr "Deutsch"
+
+#. Game title on the title screen.
+#. English: Utopia
+msgid "GAME_TITLE"
+msgstr "Utopia"
+
+#. Title screen subtitle. Wraps to at most two lines.
+#. English: The kingdom's perfect peace has a price. Raise the banner of revolt.
+msgid "MAIN_MENU_TAGLINE"
+msgstr "Der vollkommene Frieden des Königreichs hat seinen Preis. Hisse das Banner der Revolte."
+
+#. Button: resume the saved campaign.
+#. English: Continue
+msgid "MAIN_MENU_CONTINUE"
+msgstr "Fortsetzen"
+
+#. Button: start a new campaign.
+#. English: New Campaign
+msgid "MAIN_MENU_NEW_GAME"
+msgstr "Neuer Feldzug"
+
+#. Button: close the game.
+#. English: Quit Game
+msgid "MAIN_MENU_QUIT"
+msgstr "Spiel beenden"
+
+#. Footer. {version} is the build number, e.g. 0.1.0.
+#. English: Version {version}
+msgid "MAIN_MENU_VERSION"
+msgstr "Version {version}"
+
+#. Button: open the settings screen.
+#. English: Settings
+msgid "MENU_SETTINGS"
+msgstr "Einstellungen"
+
+#. Generic button label while an action is in progress.
+#. English: Working…
+msgid "UI_BUSY"
+msgstr "Einen Moment …"
+
+#. Button label while the next scene loads.
+#. English: Loading…
+msgid "UI_LOADING_SHORT"
+msgstr "Lädt …"
+
+#. Generic cancel button.
+#. English: Cancel
+msgid "UI_CANCEL"
+msgstr "Abbrechen"
+
+#. Generic confirm button.
+#. English: Confirm
+msgid "UI_CONFIRM"
+msgstr "Bestätigen"
+
+#. Acknowledge button on a message.
+#. English: OK
+msgid "UI_OK"
+msgstr "OK"
+
+#. Close the current screen.
+#. English: Back
+msgid "UI_BACK"
+msgstr "Zurück"
+
+#. Fallback confirmation title.
+#. English: Are you sure?
+msgid "CONFIRM_TITLE_DEFAULT"
+msgstr "Bist du sicher?"
+
+#. Dialog title when starting over with an existing save.
+#. English: Start a new campaign?
+msgid "CONFIRM_NEW_GAME_TITLE"
+msgstr "Neuen Feldzug beginnen?"
+
+#. Warns that the saved campaign is replaced on the next save.
+#. English: Your current campaign will be replaced the next time the game saves. This can't be undone.
+msgid "CONFIRM_NEW_GAME_BODY"
+msgstr "Dein aktueller Feldzug wird beim nächsten Speichern ersetzt. Das lässt sich nicht rückgängig machen."
+
+#. Destructive confirm button.
+#. English: Start Over
+msgid "CONFIRM_NEW_GAME_ACCEPT"
+msgstr "Neu beginnen"
+
+#. Dialog title when a save cannot be loaded.
+#. English: Couldn't continue your campaign
+msgid "LOAD_FAILED_TITLE"
+msgstr "Feldzug konnte nicht fortgesetzt werden"
+
+#. Dialog title for leaving a mission early.
+#. English: Abandon this mission?
+msgid "CONFIRM_ABANDON_TITLE"
+msgstr "Mission abbrechen?"
+
+#. Explains what is lost when leaving.
+#. English: You'll return to the title screen. Progress in this mission will be lost; your last saved campaign is safe.
+msgid "CONFIRM_ABANDON_BODY"
+msgstr "Du kehrst zum Titelbildschirm zurück. Der Fortschritt in dieser Mission geht verloren; dein zuletzt gespeicherter Feldzug bleibt erhalten."
+
+#. Destructive confirm: leave the mission.
+#. English: Abandon Mission
+msgid "CONFIRM_ABANDON_ACCEPT"
+msgstr "Mission abbrechen"
+
+#. Stay in the mission.
+#. English: Keep Fighting
+msgid "CONFIRM_ABANDON_DECLINE"
+msgstr "Weiterkämpfen"
+
+#. Shown while the game starts.
+#. English: Preparing the rebellion…
+msgid "BOOT_LOADING"
+msgstr "Die Rebellion wird vorbereitet …"
+
+#. Startup failed.
+#. English: The game couldn't start
+msgid "BOOT_ERROR_TITLE"
+msgstr "Das Spiel konnte nicht starten"
+
+#. Startup failure explanation and next step.
+#. English: Some game files are missing or damaged. Your saved progress has not been changed. Please verify or reinstall the game, then try again.
+msgid "BOOT_ERROR_BODY"
+msgstr "Einige Spieldateien fehlen oder sind beschädigt. Dein gespeicherter Fortschritt wurde nicht verändert. Bitte überprüfe oder installiere das Spiel neu und versuche es erneut."
+
+#. Close the game after a startup error.
+#. English: Close Game
+msgid "BOOT_ERROR_QUIT"
+msgstr "Spiel schließen"
+
+#. Settings screen heading.
+#. English: Settings
+msgid "SETTINGS_TITLE"
+msgstr "Einstellungen"
+
+#. Label for the language picker.
+#. English: Language
+msgid "SETTINGS_LANGUAGE"
+msgstr "Sprache"
+
+#. Label for the text size picker.
+#. English: Text size
+msgid "SETTINGS_TEXT_SIZE"
+msgstr "Textgröße"
+
+#. Text size option.
+#. English: Default
+msgid "SETTINGS_TEXT_SIZE_DEFAULT"
+msgstr "Standard"
+
+#. Text size option.
+#. English: Large
+msgid "SETTINGS_TEXT_SIZE_LARGE"
+msgstr "Groß"
+
+#. Text size option.
+#. English: Largest
+msgid "SETTINGS_TEXT_SIZE_LARGEST"
+msgstr "Sehr groß"
+
+#. Accessibility toggle that removes screen shake and slides.
+#. English: Reduce motion
+msgid "SETTINGS_REDUCED_MOTION"
+msgstr "Bewegung reduzieren"
+
+#. Explains that settings need no save button.
+#. English: Changes apply immediately and are saved automatically.
+msgid "SETTINGS_SAVED_AUTOMATICALLY"
+msgstr "Änderungen gelten sofort und werden automatisch gespeichert."
+
+#. Pause menu heading.
+#. English: Paused
+msgid "PAUSE_TITLE"
+msgstr "Pause"
+
+#. Close the pause menu.
+#. English: Resume
+msgid "PAUSE_RESUME"
+msgstr "Weiter"
+
+#. Leave the mission (asks for confirmation).
+#. English: Abandon Mission
+msgid "PAUSE_ABANDON"
+msgstr "Mission abbrechen"
+
+#. Caption above the health bar.
+#. English: Health
+msgid "HUD_HEALTH_LABEL"
+msgstr "Lebenspunkte"
+
+#. Health bar text. {current} and {max} are formatted numbers.
+#. English: {current} / {max}
+msgid "HUD_HEALTH_VALUE"
+msgstr "{current} / {max}"
+
+#. Control hint for movement.
+#. English: Move: arrow keys or D-pad
+msgid "HUD_PROMPT_MOVE"
+msgstr "Bewegen: Pfeiltasten oder Steuerkreuz"
+
+#. Control hint shown next to the pause key glyph.
+#. English: Pause
+msgid "HUD_PROMPT_PAUSE"
+msgstr "Pause"
+
+#. Shown when a move is refused.
+#. English: You can't move there.
+msgid "HUD_HINT_BLOCKED"
+msgstr "Dorthin kannst du nicht ziehen."
+
+#. Unit stepped on a hazard. {amount} is a number.
+#. English: Hazard! You lost {amount} health point.
+msgid "HUD_HINT_HAZARD"
+msgid_plural "HUD_HINT_HAZARD_PLURAL"
+msgstr[0] "Gefahr! Du hast {amount} Lebenspunkt verloren."
+msgstr[1] "Gefahr! Du hast {amount} Lebenspunkte verloren."
+
+#. Mission won.
+#. English: Mission Complete
+msgid "RESULT_VICTORY_TITLE"
+msgstr "Mission erfüllt"
+
+#. Mission lost.
+#. English: Mission Failed
+msgid "RESULT_DEFEAT_TITLE"
+msgstr "Mission gescheitert"
+
+#. Victory text.
+#. English: Your band reached the rally point. Word of the uprising spreads.
+msgid "RESULT_VICTORY_BODY"
+msgstr "Deine Truppe hat den Sammelpunkt erreicht. Die Kunde vom Aufstand verbreitet sich."
+
+#. Defeat text with next step.
+#. English: Your unit has fallen. Your saved campaign is unchanged. Try the mission again or return to the title screen.
+msgid "RESULT_DEFEAT_BODY"
+msgstr "Deine Einheit ist gefallen. Dein gespeicherter Feldzug ist unverändert. Versuche die Mission erneut oder kehre zum Titelbildschirm zurück."
+
+#. Leave the result screen after a victory.
+#. English: Continue
+msgid "RESULT_CONTINUE"
+msgstr "Weiter"
+
+#. Return to the title screen.
+#. English: Title Screen
+msgid "RESULT_RETURN_TO_MENU"
+msgstr "Titelbildschirm"
+
+#. Restart the mission.
+#. English: Try Again
+msgid "RESULT_RETRY"
+msgstr "Erneut versuchen"
+
+#. Rewards summary. {list} is a list of reward lines.
+#. English: Rewards: {list}
+msgid "RESULT_REWARDS"
+msgstr "Belohnungen: {list}"
+
+#. One reward. {amount} is a number, {resource} a resource name.
+#. English: {amount} {resource}
+msgid "REWARD_LINE"
+msgstr "{amount} {resource}"
+
+#. Separator between list items, including spaces.
+#. English: , 
+msgid "LIST_SEPARATOR"
+msgstr ", "
+
+#. Resource name.
+#. English: Wood
+msgid "RESOURCE_WOOD"
+msgstr "Holz"
+
+#. Resource name.
+#. English: Stone
+msgid "RESOURCE_STONE"
+msgstr "Stein"
+
+#. Resource name.
+#. English: Food
+msgid "RESOURCE_FOOD"
+msgstr "Nahrung"
+
+#. Resource name.
+#. English: Gold
+msgid "RESOURCE_GOLD"
+msgstr "Gold"
+
+#. Resource name. Corrupting power source; keep it ominous.
+#. English: Soul Energy
+msgid "RESOURCE_SOUL_ENERGY"
+msgstr "Seelenenergie"
+
+#. Generic save success.
+#. English: Done.
+msgid "SAVE_STATUS_OK"
+msgstr "Erledigt."
+
+#. Autosave in progress.
+#. English: Saving your progress… Please don't close the game.
+msgid "SAVE_STATUS_SAVING"
+msgstr "Dein Fortschritt wird gespeichert … Bitte schließe das Spiel nicht."
+
+#. Short button label while saving.
+#. English: Saving…
+msgid "SAVE_STATUS_SAVING_SHORT"
+msgstr "Speichert …"
+
+#. Autosave succeeded.
+#. English: Progress saved.
+msgid "SAVE_STATUS_SAVED"
+msgstr "Fortschritt gespeichert."
+
+#. Retry a failed save.
+#. English: Try Saving Again
+msgid "SAVE_TRY_AGAIN"
+msgstr "Erneut speichern"
+
+#. No save exists.
+#. English: No saved campaign was found. Start a new campaign to begin.
+msgid "SAVE_ERROR_NOT_FOUND"
+msgstr "Es wurde kein gespeicherter Feldzug gefunden. Beginne einen neuen Feldzug."
+
+#. Save file unreadable.
+#. English: Your saved campaign is damaged and can't be loaded. A backup may be restored automatically in a future update; for now, start a new campaign.
+msgid "SAVE_ERROR_CORRUPTED"
+msgstr "Dein gespeicherter Feldzug ist beschädigt und kann nicht geladen werden. Beginne vorerst einen neuen Feldzug."
+
+#. Save from a newer game version.
+#. English: This campaign was saved by a newer version of the game. Update the game to continue it.
+msgid "SAVE_ERROR_VERSION_TOO_NEW"
+msgstr "Dieser Feldzug wurde mit einer neueren Spielversion gespeichert. Aktualisiere das Spiel, um ihn fortzusetzen."
+
+#. Disk read failed.
+#. English: Your saved campaign couldn't be read. Check that the game can access its save folder, then try again.
+msgid "SAVE_ERROR_READ_FAILED"
+msgstr "Dein gespeicherter Feldzug konnte nicht gelesen werden. Prüfe, ob das Spiel auf seinen Speicherordner zugreifen kann, und versuche es erneut."
+
+#. Disk write failed. Previous save is kept.
+#. English: Your progress couldn't be saved. Your previous save is still safe. Free up disk space or check folder permissions, then try again.
+msgid "SAVE_ERROR_WRITE_FAILED"
+msgstr "Dein Fortschritt konnte nicht gespeichert werden. Dein vorheriger Spielstand ist sicher. Schaffe Speicherplatz oder prüfe die Ordnerrechte und versuche es erneut."
+
+#. Internal slot problem, explained plainly.
+#. English: That save slot can't be used. Your other saves are unaffected.
+msgid "SAVE_ERROR_INVALID_SLOT"
+msgstr "Dieser Speicherplatz kann nicht verwendet werden. Deine anderen Spielstände sind nicht betroffen."
+
+#. Hero display name. Former royal soldier.
+#. English: Kestrel Vane
+msgid "HERO_DESERTER_NAME"
+msgstr "Kestrel Vane"
+
+#. Battalion type name.
+#. English: Free Militia
+msgid "BATTALION_MILITIA_NAME"
+msgstr "Freie Miliz"
+
+#. Card name (move).
+#. English: March
+msgid "CARD_MARCH_NAME"
+msgstr "Marsch"
+
+#. Card rules text.
+#. English: Move up to 2 tiles.
+msgid "CARD_MARCH_DESC"
+msgstr "Bewege dich bis zu 2 Felder."
+
+#. Card name (attack).
+#. English: Strike
+msgid "CARD_STRIKE_NAME"
+msgstr "Hieb"
+
+#. Card rules text.
+#. English: Deal 3 physical damage to an adjacent enemy.
+msgid "CARD_STRIKE_DESC"
+msgstr "Füge einem benachbarten Feind 3 physischen Schaden zu."
+
+#. Card name (defend).
+#. English: Guard
+msgid "CARD_GUARD_NAME"
+msgstr "Deckung"
+
+#. Card rules text.
+#. English: Block the next 2 damage this round.
+msgid "CARD_GUARD_DESC"
+msgstr "Blocke in dieser Runde die nächsten 2 Schaden."
+
+#. Card name (buff).
+#. English: Rally
+msgid "CARD_RALLY_NAME"
+msgstr "Sammeln"
+
+#. Card rules text.
+#. English: Gain 1 morale and act earlier next round.
+msgid "CARD_RALLY_DESC"
+msgstr "Erhalte 1 Moral und handle in der nächsten Runde früher."
+
+#. Hero signature card.
+#. English: Deserter's Resolve
+msgid "CARD_DESERTERS_RESOLVE_NAME"
+msgstr "Entschlossenheit des Deserteurs"
+
+#. Card rules text.
+#. English: Deal 4 physical damage. If your morale is high, draw a card.
+msgid "CARD_DESERTERS_RESOLVE_DESC"
+msgstr "Füge 4 physischen Schaden zu. Ist deine Moral hoch, ziehe eine Karte."
+
+#. Mission name.
+#. English: The First Spark
+msgid "MISSION_FIRST_SPARK_TITLE"
+msgstr "Der erste Funke"
+
+#. Mission objective, imperative.
+#. English: Reach the golden rally point. Avoid the burning ground.
+msgid "MISSION_FIRST_SPARK_OBJECTIVE"
+msgstr "Erreiche den goldenen Sammelpunkt. Meide den brennenden Boden."
+
+#. Dialog title when a screen fails to open.
+#. English: Something went wrong
+msgid "ROUTE_FAILED_TITLE"
+msgstr "Etwas ist schiefgelaufen"
+
+#. Explains a failed screen change; progress is unaffected.
+#. English: That part of the game couldn't be opened. Your saved progress is safe. Please try again; if it keeps happening, verify or reinstall the game.
+msgid "ROUTE_FAILED_BODY"
+msgstr "Dieser Teil des Spiels konnte nicht geöffnet werden. Dein gespeicherter Fortschritt ist sicher. Bitte versuche es erneut; tritt der Fehler wieder auf, überprüfe oder installiere das Spiel neu."

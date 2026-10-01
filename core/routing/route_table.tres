@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RouteTable" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/routing/route_table.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+routes = Dictionary[StringName, String]({
+&"bootstrap": "res://scenes/bootstrap/bootstrap.tscn",
+&"gameplay": "res://scenes/gameplay/gameplay.tscn",
+&"main_menu": "res://scenes/main_menu/main_menu.tscn"
+})

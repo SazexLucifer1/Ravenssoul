@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitStats" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/characters/data/unit_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+max_health = 8
+physical_damage = 3
+magical_damage = 1
+movement = 1
+card_draw = 1
+max_hand_size = 2
+max_ap = 1
+morale = 5
+speed = 6

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://features/quests/data/mission_data.gd" id="1"]
+[ext_resource type="Resource" path="res://features/combat/content/maps/map_training_ground.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"mission_first_spark"
+title_key = "MISSION_FIRST_SPARK_TITLE"
+objective_key = "MISSION_FIRST_SPARK_OBJECTIVE"
+objective = 3
+map = ExtResource("2")
+rewards = Dictionary[StringName, int]({
+&"gold": 50,
+&"wood": 10
+})

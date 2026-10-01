@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/combat/data/card_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"card_rally"
+name_key = "CARD_RALLY_NAME"
+description_key = "CARD_RALLY_DESC"
+kind = 3
+ap_cost = 2
+power = 1
+range_tiles = 0

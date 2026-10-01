@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://features/characters/data/hero_data.gd" id="1"]
+[ext_resource type="Resource" path="res://features/characters/content/stats_hero_deserter.tres" id="2"]
+[ext_resource type="Resource" path="res://features/combat/content/cards/card_deserters_resolve.tres" id="3"]
+[ext_resource type="Resource" path="res://features/combat/content/cards/card_strike.tres" id="4"]
+[ext_resource type="Resource" path="res://features/combat/content/cards/card_guard.tres" id="5"]
+[ext_resource type="Resource" path="res://features/combat/content/cards/card_march.tres" id="6"]
+[ext_resource type="Script" path="res://features/combat/data/card_data.gd" id="7"]
+
+[resource]
+script = ExtResource("1")
+id = &"hero_deserter"
+name_key = "HERO_DESERTER_NAME"
+stats = ExtResource("2")
+deck = Array[ExtResource("7")]([ExtResource("3"), ExtResource("4"), ExtResource("4"), ExtResource("5"), ExtResource("6")])

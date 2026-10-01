@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/menus/settings/settings_screen.gd" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+
+[node name="SettingsScreen" type="Control" node_paths=PackedStringArray("language_option", "text_size_option", "reduced_motion_toggle", "back_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+language_option = NodePath("Center/Panel/Content/Grid/LanguageOption")
+text_size_option = NodePath("Center/Panel/Content/Grid/TextSizeOption")
+reduced_motion_toggle = NodePath("Center/Panel/Content/Grid/ReducedMotionToggle")
+back_button = NodePath("Center/Panel/Content/BackButton")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Center/Panel/Content"]
+layout_mode = 2
+theme_type_variation = &"HeadingLabel"
+text = "SETTINGS_TITLE"
+
+[node name="Grid" type="GridContainer" parent="Center/Panel/Content"]
+layout_mode = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 16
+columns = 2
+
+[node name="LanguageLabel" type="Label" parent="Center/Panel/Content/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SETTINGS_LANGUAGE"
+
+[node name="LanguageOption" type="OptionButton" parent="Center/Panel/Content/Grid"]
+custom_minimum_size = Vector2(260, 52)
+layout_mode = 2
+
+[node name="TextSizeLabel" type="Label" parent="Center/Panel/Content/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SETTINGS_TEXT_SIZE"
+
+[node name="TextSizeOption" type="OptionButton" parent="Center/Panel/Content/Grid"]
+custom_minimum_size = Vector2(260, 52)
+layout_mode = 2
+
+[node name="ReducedMotionLabel" type="Label" parent="Center/Panel/Content/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SETTINGS_REDUCED_MOTION"
+autowrap_mode = 3
+
+[node name="ReducedMotionToggle" type="CheckButton" parent="Center/Panel/Content/Grid"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Hint" type="Label" parent="Center/Panel/Content"]
+custom_minimum_size = Vector2(580, 0)
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = "SETTINGS_SAVED_AUTOMATICALLY"
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="Center/Panel/Content"]
+custom_minimum_size = Vector2(280, 52)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"PrimaryButton"
+text = "UI_BACK"
+script = ExtResource("2")
