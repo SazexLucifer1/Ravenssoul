@@ -7,7 +7,7 @@
 | `en` English | `assets/localization/en.po` | **Source** and fallback locale |
 | `de` German | `assets/localization/de.po` | Complete |
 
-Supported list: `LocaleRegistry.SUPPORTED` (`core/localization/locale_registry.gd`).
+Supported list: `LocaleRegistry.Supported` (`core/localization/LocaleRegistry.cs`).
 First launch picks the OS language if supported (`de_AT` → `de`), else `en`.
 The player's choice is saved in `user://settings.cfg` and applied at startup
 (`Settings` autoload). Language changes apply immediately, no restart.
@@ -18,8 +18,8 @@ The player's choice is saved in `user://settings.cfg` and applied at startup
    prefixed by area: `MAIN_MENU_`, `HUD_`, `SAVE_ERROR_`, `CARD_<ID>_NAME`).
    In scenes, put the key in `text`; Godot's auto-translation shows the
    localized text. Data Resources store keys in `*_key` fields.
-2. **Named placeholders** `{name}`, filled with `Loc.format(key, args)` or
-   `Loc.format_plural(key, count, args)`. Never `tr(key).format(...)` (a test
+2. **Named placeholders** `{name}`, filled with `Loc.Format(key, args)` or
+   `Loc.FormatPlural(key, count, args)`. Never fill `Tr(key)` by hand (`.Replace`, `string.Format`) (a test
    enforces this): Godot's pseudolocalizer only protects `%s`-style
    placeholders and `tr_n` skips pseudolocalization, so `Loc` fills
    placeholders first and pseudolocalizes the finished string.
@@ -28,7 +28,7 @@ The player's choice is saved in `user://settings.cfg` and applied at startup
    gettext plural forms + `{placeholders}` are the engine equivalent.
    Select/gender variants: use separate keys (`..._MALE`, `..._FEMALE`) chosen
    in code by a stable enum, not string concatenation.
-4. **Numbers**: format with `LocaleFormat.integer/decimal/percent` before
+4. **Numbers**: format with `LocaleFormat.Integer/Decimal/Percent` before
    passing them in (`1,234` en / `1.234` de; native digits via TextServer).
    Dates/times/currency: none are shown yet; add them to `LocaleFormat`
    (a table per locale, like grouping) when first needed. The game has no
@@ -80,7 +80,7 @@ godot --headless --path . res://tests/framework/test_runner.tscn -- --filter=ui_
 
 # Extract keys referenced in code/scenes/resources but missing from en.po
 # (prints ready-to-paste PO stubs; exit code 1 if any are missing):
-godot --headless --path . --script res://tests/tools/extract_keys.gd
+godot --headless --path . res://tests/tools/extract_keys.tscn
 
 # Locale screenshots (en, de, pseudo, rtl) — needs a renderer:
 xvfb-run -a godot --path . --rendering-driver opengl3 --audio-driver Dummy \
@@ -102,7 +102,7 @@ xvfb-run -a godot --path . --rendering-driver opengl3 --audio-driver Dummy \
    `Plural-Forms` headers; translate; add `#. English:` lines; set
    `LANGUAGE_ENDONYM`.
 2. Add the path to `internationalization/locale/translations` in
-   `project.godot` and the code to `LocaleRegistry.SUPPORTED`.
+   `project.godot` and the code to `LocaleRegistry.Supported`.
 3. Add number separators to `LocaleFormat.GROUPING`/`DECIMAL`.
 4. RTL language (ar, he, fa, ur): already listed in `LocaleRegistry.RTL_LOCALES`;
    the UI mirrors automatically (root window follows the application locale's
@@ -136,7 +136,7 @@ reverses digits — that's a pseudo artifact, not a bug.
 
 ## Audio and assets per locale
 
-No voice or localized textures yet. Plan: `DialogueLine.voice_id` resolves to
+No voice or localized textures yet. Plan: `DialogueLine.VoiceId` resolves to
 `assets/audio/vo/<locale>/<voice_id>.ogg` with fallback to `en`; subtitles
 are always shown (accessibility). Localized textures use Godot's resource
 remaps (`internationalization/locale/translation_remaps`).
@@ -144,7 +144,7 @@ remaps (`internationalization/locale/translation_remaps`).
 ## Automation and localization
 
 The automation protocol exchanges ids and translation keys: entities expose
-`text_key` (stable) and `text` (current localized string, for humans only).
+`TextKey` (stable) and `text` (current localized string, for humans only).
 Tests and agents assert on keys, so they pass in every language. The only
 player-visible automation text is the `AUTOMATION_BADGE` key. Upper-snake
 strings that are not translation keys (environment variable names) are listed
@@ -158,5 +158,5 @@ in `NOT_TRANSLATION_KEYS` in the localization test and the extraction tool.
 
 ## Platform limitations
 
-Windows/Linux desktop only; OS locale read via `OS.get_locale()`. No
+Windows/Linux desktop only; OS locale read via `OS.GetLocale()`. No
 platform store localization metadata yet.

@@ -13,7 +13,7 @@ not built yet — see "Blueprint coverage" in [`docs/ARCHITECTURE.md`](docs/ARCH
 
 | | |
 |---|---|
-| Engine | Godot 4.6 (≥ 4.5 required), typed GDScript |
+| Engine | Godot 4.6 **.NET** (≥ 4.5 required), C# / .NET 8 |
 | Renderer | GL Compatibility, 2D |
 | Platforms | Windows, Linux |
 | Languages | English (source), German |
@@ -22,10 +22,12 @@ not built yet — see "Blueprint coverage" in [`docs/ARCHITECTURE.md`](docs/ARCH
 
 ## Getting started
 
-1. Install [Godot 4.6](https://godotengine.org/download) (standard build, not .NET).
-2. Open `project.godot` in the editor, or from a terminal:
+1. Install [Godot 4.6 **.NET**](https://godotengine.org/download) and the
+   [.NET 8 SDK](https://dotnet.microsoft.com/download) (Linux: `bash tools/setup/install_toolchain.sh`).
+2. Open `project.godot` in the editor and press Play, or from a terminal:
    ```bash
-   godot --path . --import          # first time: build the class cache
+   dotnet build                     # compile the C# (the editor does this on Play)
+   godot --path . --import          # first time only
    godot --path .                   # run the game
    godot --path . -- --route=gameplay   # debug builds: jump straight into a mission
    ```
@@ -35,14 +37,26 @@ not built yet — see "Blueprint coverage" in [`docs/ARCHITECTURE.md`](docs/ARCH
 ## Tests
 
 ```bash
-GODOT=/path/to/godot tests/run_tests.sh                 # everything CI runs
+python3 tools/guards/check_rules.py                     # rule guards (seconds)
+GODOT=/path/to/godot-mono tests/run_tests.sh            # everything CI runs
 godot --headless --path . res://tests/framework/test_runner.tscn -- --filter=save
 ```
 
-186 Godot tests (unit + integration) and 25 Python automation-client tests,
-an end-to-end automation scenario, boot smoke runs, translation key
-extraction, and a locale screenshot tool. See [`docs/TESTING.md`](docs/TESTING.md).
-CI: `.github/workflows/ci.yml`.
+186 Godot tests (unit + integration, C#), 25 Python automation-client tests,
+10 guard-script tests, an end-to-end automation scenario, boot smoke runs,
+translation key extraction, and a locale screenshot tool. See
+[`docs/TESTING.md`](docs/TESTING.md). CI: `.github/workflows/ci.yml` (PRs and
+`main`); the full suite with renderer and screenshots runs every night
+(`.github/workflows/nightly.yml`).
+
+## How this game is built
+
+The owner describes features in plain language and judges them by playing.
+Claude Code directs (plans, asks, writes briefs, reviews); Codex workers build;
+the model that wrote something never reviews it. Repeated mistakes become
+rules and guard scripts. See [`docs/AI_WORKFLOW.md`](docs/AI_WORKFLOW.md), the
+rulebook [`docs/AI_INSTRUCTIONS.md`](docs/AI_INSTRUCTIONS.md), and
+[`AGENTS.md`](AGENTS.md).
 
 ## Remote automation (dev/QA builds)
 
@@ -85,7 +99,9 @@ Explained in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | [TESTING](docs/TESTING.md) | Test runner and coverage |
 | [ADDING_A_FEATURE](docs/ADDING_A_FEATURE.md) | Step-by-step recipe |
 | [AUTOMATION](docs/AUTOMATION.md) | Remote automation protocol, security, SDK, CI |
-| [AI_INSTRUCTIONS](docs/AI_INSTRUCTIONS.md) | Rules for AI assistants and contributors |
+| [AI_INSTRUCTIONS](docs/AI_INSTRUCTIONS.md) | The rulebook for AI assistants and contributors |
+| [AI_WORKFLOW](docs/AI_WORKFLOW.md) | Roles, briefs, cross-model review, nightly tests, art & sound pipeline |
+| [MISTAKES](docs/MISTAKES.md) | Repeated mistakes and the rule or guard each produced |
 | [decisions/](docs/decisions/) | Architecture decision records |
 
 ## Screenshots

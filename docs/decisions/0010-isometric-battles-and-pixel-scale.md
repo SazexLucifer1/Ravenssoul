@@ -9,8 +9,8 @@ pixel art that must stay crisp at every supported resolution. The prototype
 used a top-down square grid drawn at 48 px cells in 1280×720 space.
 
 ## Decision
-- Battles use a 2:1 isometric projection. `BattleGrid.cell_to_local` /
-  `local_to_cell` are the only projection code; tile footprint 32×16 art px,
+- Battles use a 2:1 isometric projection. `BattleGrid.CellToLocal` /
+  `LocalToCell` are the only projection code; tile footprint 32×16 art px,
   elevation step 8 px. Units are y-sorted.
 - World art is authored in a 640×360 art frame. The UI keeps the 1280×720
   logical canvas (crisp text); the gameplay camera uses zoom 2, so the world

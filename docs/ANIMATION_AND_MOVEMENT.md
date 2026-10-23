@@ -107,7 +107,7 @@ facial capture and lip sync.
 | `Character` | Logical `cell`, component wiring | Read input, decide rules |
 | `GridMover` (Tween) | Moving the unit's `Node2D` between cell centers | Change `cell` |
 | `AnimationPlayer` + library `unit` | Sprite/visual tracks on `Visual`; method tracks for events | Move the unit root, apply damage |
-| `CharacterAnimator` | Gameplay signal → animation; exposes `animation_event` | Contain rules |
+| `CharacterAnimator` | Gameplay signal → animation; exposes `AnimationEvent` | Contain rules |
 | Tweens elsewhere | UI transitions (0.15–0.3 s), press feedback | Gameplay timing |
 | Particles / shaders | Cosmetic VFX | Collision or rules |
 | CharacterBody2D / physics | **Not used** for units (see collision doc) | — |
@@ -119,23 +119,23 @@ the `Character` root, so the two never fight over the same property.
 clearer. Introduce `AnimationTree` with a state machine (idle, move, act,
 hit, defeat) and a `BlendSpace2D` for facing when directional sprite sets
 arrive; `CharacterAnimator` then sets tree parameters instead of calling
-`play()`, and nothing else changes.
+`Play()`, and nothing else changes.
 
 ## Gameplay state drives animation
 
 ```
-PlayerUnitController.try_step()      → grid.relocate() (rule)  → Character.step_to()
-Character.step_to()                  → cell updated immediately → GridMover.move_to()
-GridMover.move_started(direction)    → CharacterAnimator: facing + play("unit/move")
-GridMover.move_finished              → CharacterAnimator: play("unit/idle")
-HealthComponent.damaged              → CharacterAnimator: play("unit/hit") → idle
-HealthComponent.died                 → CharacterAnimator: play("unit/defeat") (terminal)
+PlayerUnitController.TryStep()       → Grid.Relocate() (rule)  → Character.StepTo()
+Character.StepTo()                   → cell updated immediately → GridMover.MoveTo()
+GridMover.MoveStarted(direction)     → CharacterAnimator: facing + Play("unit/move")
+GridMover.MoveFinished               → CharacterAnimator: Play("unit/idle")
+HealthComponent.Damaged              → CharacterAnimator: Play("unit/hit") → idle
+HealthComponent.Died                 → CharacterAnimator: Play("unit/defeat") (terminal)
 ```
 
 ## Animation events
 
 Method tracks in `features/characters/animations/unit_animations.tres` call
-`CharacterAnimator.emit_animation_event(name)`:
+`CharacterAnimator.EmitAnimationEvent(name)`:
 
 | Event | Animation | Consumers (planned) |
 |---|---|---|
@@ -163,10 +163,10 @@ budget: ≤ 40 animated units, ≤ 4 sprites each (hero + 3 minis), clips at
 
 ## Tests (implemented)
 
-`tests/integration/test_character_scene.gd`:
+`tests/integration/TestCharacterScene.cs`:
 logical cell updates before the visual (frame-independent outcome); the
 visual ends exactly on the cell center; large frame deltas (`Engine.time_scale = 4`)
 don't change the result; reduced motion snaps; state → animation transitions
 (idle → move → idle → hit → idle → defeat, defeat terminal); `footstep` and
 `hit_impact` events fire from tracks; facing follows horizontal steps;
-`defeated` fires. Grid legality: `tests/unit/combat/test_battle_grid.gd`.
+`Defeated` fires. Grid legality: `tests/unit/combat/TestBattleGrid.cs`.

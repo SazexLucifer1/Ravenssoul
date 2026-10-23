@@ -1,0 +1,68 @@
+name: Nightly
+
+# The full suite every night, so the day is for building and playing.
+# A failure opens (or comments on) one issue labelled "nightly-failure".
+on:
+  schedule:
+    - cron: "17 1 * * *"   # 01:17 UTC = 03:17 Berlin (summer) / 02:17 (winter)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  GODOT_VERSION: "4.6-stable"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Install Xvfb and Mesa
+        run: sudo apt-get update && sudo apt-get install -y xvfb libgl1-mesa-dri
+      - name: Download Godot (.NET)
+        run: |
+          name="Godot_v${GODOT_VERSION}_mono_linux_x86_64"
+          curl -sSfL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/${name}.zip"
+          unzip -q godot.zip
+          echo "GODOT=$PWD/${name}/Godot_v${GODOT_VERSION}_mono_linux.x86_64" >> "$GITHUB_ENV"
+      - name: Full suite (guards, build, tests, client, scenario, gating, smoke)
+        run: tests/run_tests.sh
+      - name: First-mission scenario with renderer (screenshot required)
+        run: |
+          PYTHONPATH=tools/automation xvfb-run -a -s "-screen 0 1280x720x24" \
+            python3 -m utopia_automation scenario first_mission --godot "$GODOT" --project . \
+            --out automation-output --require-screenshot
+      - name: Locale and state screenshots
+        run: |
+          xvfb-run -a -s "-screen 0 1280x720x24" "$GODOT" --path . --rendering-driver opengl3 --audio-driver Dummy \
+            res://tests/tools/screenshot_capture.tscn -- --out="$PWD/screenshots"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-${{ github.run_number }}
+          path: |
+            automation-output/
+            screenshots/*.png
+      - name: Report failure as an issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `The nightly run failed on \`${context.sha.slice(0, 7)}\`.\n\nLog and artifacts: ${run}\n\nDirector: turn this into a fix brief (docs/AI_WORKFLOW.md).`;
+            const open = await github.rest.issues.listForRepo({ ...context.repo, state: "open", labels: "nightly-failure" });
+            if (open.data.length > 0) {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: open.data[0].number, body });
+            } else {
+              await github.rest.issues.create({ ...context.repo, title: "Nightly run failed", body, labels: ["nightly-failure"] });
+            }

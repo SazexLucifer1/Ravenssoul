@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://core/ui/screens/confirm_dialog.gd" id="1"]
-[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+[ext_resource type="Script" path="res://core/ui/screens/ConfirmDialog.cs" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/GameButton.cs" id="2"]
 
-[node name="ConfirmDialog" type="Control" node_paths=PackedStringArray("title_label", "body_label", "confirm_button", "cancel_button")]
+[node name="ConfirmDialog" type="Control" node_paths=PackedStringArray("TitleLabel", "BodyLabel", "ConfirmButton", "CancelButton")]
 metadata/automation_id = "screen.confirm"
 layout_mode = 3
 anchors_preset = 15
@@ -12,10 +12,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-title_label = NodePath("Center/Panel/Content/Title")
-body_label = NodePath("Center/Panel/Content/Body")
-confirm_button = NodePath("Center/Panel/Content/Buttons/ConfirmButton")
-cancel_button = NodePath("Center/Panel/Content/Buttons/CancelButton")
+TitleLabel = NodePath("Center/Panel/Content/Title")
+BodyLabel = NodePath("Center/Panel/Content/Body")
+ConfirmButton = NodePath("Center/Panel/Content/Buttons/ConfirmButton")
+CancelButton = NodePath("Center/Panel/Content/Buttons/CancelButton")
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1

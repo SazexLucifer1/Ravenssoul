@@ -8,27 +8,27 @@ that design will change.
 
 | Need | Use |
 |---|---|
-| Data edited by designers, shared by many instances (stats, cards, maps, missions) | `Resource` (`extends Resource`, `@export` fields) |
+| Data edited by designers, shared by many instances (stats, cards, maps, missions) | `Resource` (`[GlobalClass] partial class X : Resource`, `[Export]` properties) |
 | Something in the world or on screen, with children/processing | Scene (`.tscn`) + script |
-| Pure logic/state with no editor data (deck piles, wallet, turn order) | `RefCounted` class |
+| Pure logic/state with no editor data (deck piles, loadout, turn order) | Plain C# class (`RefCounted` only when it must carry Godot signals, like `ResourceWallet`) |
 | Global lifetime service | Autoload (rare; see AI_INSTRUCTIONS.md) |
 
 ## Resource scripts
 
 | Class | File | Fields / role |
 |---|---|---|
-| `UnitStats` | `features/characters/data/unit_stats.gd` | `max_health, physical_damage, magical_damage, movement, card_draw, max_hand_size, max_ap, morale, speed`; `combine(a, b)` adds |
-| `UnitPartData` | `…/unit_part_data.gd` | base: `id, name_key, stats, deck`, `validate()` |
-| `HeroData` | `…/hero_data.gd` | deck size 5 |
-| `BattalionData` | `…/battalion_data.gd` | deck size 15 |
-| `RosterCatalog` | `…/roster_catalog.gd` | all heroes/battalions by id + defaults; turns save ids back into Resources |
-| `CardData` | `features/combat/data/card_data.gd` | `id, name_key, description_key, kind, ap_cost, power, range_tiles` |
-| `BattleMapData` | `features/combat/data/battle_map_data.gd` | `size` (12–16), `blocked_cells, hazard_cells, hazard_damage, player_spawn, objective_cell`, `validate()` |
-| `EnemyConfig` | `features/combat/data/enemy_config.gd` | `id, name_key, stats, deck, behavior_id` (no instances yet) |
-| `MissionData` | `features/quests/data/mission_data.gd` | `id, title_key, objective_key, objective, map, rewards` |
+| `UnitStats` | `features/characters/data/UnitStats.cs` | `MaxHealth, PhysicalDamage, MagicalDamage, Movement, CardDraw, MaxHandSize, MaxAp, Morale, Speed`; `Combine(a, b)` adds |
+| `UnitPartData` | `…/UnitPartData.cs` | base: `Id, NameKey, Stats, Deck`, `Validate()` |
+| `HeroData` | `…/HeroData.cs` | deck size 5 |
+| `BattalionData` | `…/BattalionData.cs` | deck size 15 |
+| `RosterCatalog` | `…/RosterCatalog.cs` | all heroes/battalions by id + defaults; turns save ids back into Resources |
+| `CardData` | `features/combat/data/CardData.cs` | `Id, NameKey, DescriptionKey, Kind, ApCost, Power, RangeTiles` |
+| `BattleMapData` | `features/combat/data/BattleMapData.cs` | `Size` (12–16), `BlockedCells, HazardCells, HazardDamage, PlayerSpawn, ObjectiveCell`, `Validate()` |
+| `EnemyConfig` | `features/combat/data/EnemyConfig.cs` | `Id, NameKey, Stats, Deck, BehaviorId` (no instances yet) |
+| `MissionData` | `features/quests/data/MissionData.cs` | `Id, TitleKey, ObjectiveKey, Objective, Map, Rewards` |
 | `DialogueLine` / `DialogueSequence` | `features/dialogue/data/` | keys, portrait, voice id (no instances yet) |
-| `RouteTable` | `core/routing/route_table.gd` | route id → scene path |
-| `UiTokens` | `core/ui/theme/ui_tokens.gd` | colors, type sizes, spacing, motion |
+| `RouteTable` | `core/routing/RouteTable.cs` | route id → scene path |
+| `UiTokens` | `core/ui/theme/UiTokens.cs` | colors, type sizes, spacing, motion |
 
 ## Authored content
 
@@ -43,17 +43,21 @@ core/ui/theme/ui_tokens.tres
 
 ## Rules
 
-- Every authored Resource has a stable `id` (`snake_case`, prefixed by kind:
+- Resource classes are C# `[GlobalClass] public partial class X : Resource`
+  in `X.cs` with `[Export]` properties; the `.tres` files store those
+  properties by their C# names (`NameKey = "..."`). Renaming a property means
+  updating every `.tres` that sets it (tests load all authored content).
+- Every authored Resource has a stable `Id` value (`snake_case`, prefixed by kind:
   `hero_`, `battalion_`, `card_`, `map_`, `mission_`). Ids go into saves and
   analytics; **never rename an id after release** — add a save migration.
-- Player-facing text is a translation key field (`name_key`, `title_key`…),
+- Player-facing text is a translation key field (`NameKey`, `TitleKey`…),
   never a display string.
 - Shared Resources are read-only at runtime. Runtime state (current health,
-  hand) lives in nodes or `RefCounted` objects, not in the `.tres`.
-  If you must mutate, `duplicate()` first.
-- Typed arrays of custom Resources: when iterating a `preload`ed catalog in
-  GDScript, type the loop variable as the base class and the array `as Array`
-  (a GDScript limitation with script-typed arrays from constants).
-- Content is validated by tests (`validate()` methods, unique ids, map size,
+  hand) lives in nodes or plain C# objects, not in the `.tres`.
+  If you must mutate, `Duplicate()` first.
+- Lists of Resources are `[Export] Godot.Collections.Array<CardData>`;
+  dictionaries are `Godot.Collections.Dictionary<StringName, int>` (only
+  exported fields use Godot collections; runtime code uses `List`/`Dictionary`).
+- Content is validated by tests (`Validate()` methods, unique ids, map size,
   deck sizes, translation keys present).
-- `id` fields are `StringName`; compare with `==`.
+- `Id` properties are `StringName`; compare with `==`.

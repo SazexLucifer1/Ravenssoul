@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
-# Runs everything CI runs: import, automated tests, and boot smoke checks.
-# Usage: GODOT=/path/to/godot tests/run_tests.sh [--filter=<path substring>]
+# Runs everything CI runs: guards, C# build, import, automated tests, and boot smoke checks.
+# Usage: GODOT=/path/to/godot-mono tests/run_tests.sh [--filter=<test label substring>]
+# GODOT must be the .NET ("mono") build of Godot 4.6; the .NET 8 SDK must be on PATH.
 set -euo pipefail
 GODOT="${GODOT:-godot}"
 cd "$(dirname "$0")/.."
+
+echo "== Guard scripts (rules from docs/AI_INSTRUCTIONS.md)"
+python3 tools/guards/check_rules.py
+
+echo "== C# build (warnings are errors)"
+dotnet build Utopia.csproj --nologo -v quiet
 
 echo "== Import project"
 "$GODOT" --headless --import >/dev/null 2>&1 || true
@@ -22,7 +29,7 @@ fi
 if [[ $# -gt 0 ]]; then exit 0; fi
 
 echo "== Localization key extraction"
-"$GODOT" --headless --script res://tests/tools/extract_keys.gd
+"$GODOT" --headless --audio-driver Dummy res://tests/tools/extract_keys.tscn
 
 smoke() {
   local expected="$1"; shift
@@ -36,6 +43,9 @@ smoke() {
     echo "Smoke run never reached '$expected'" >&2; exit 1
   fi
 }
+echo "== Guard script self-tests"
+python3 -m unittest discover -s tools/guards/tests -q
+
 echo "== Automation client unit tests (Python, stdlib only)"
 (cd tools/automation && python3 -m unittest discover -s tests -t . -q)
 

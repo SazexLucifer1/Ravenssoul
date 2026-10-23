@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scenes/menus/pause/pause_menu.gd" id="1"]
-[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+[ext_resource type="Script" path="res://scenes/menus/pause/PauseMenu.cs" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/GameButton.cs" id="2"]
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("resume_button", "settings_button", "abandon_button")]
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("ResumeButton", "SettingsButton", "AbandonButton")]
 metadata/automation_id = "screen.pause"
 layout_mode = 3
 anchors_preset = 15
@@ -12,9 +12,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-resume_button = NodePath("Center/Panel/Content/ResumeButton")
-settings_button = NodePath("Center/Panel/Content/SettingsButton")
-abandon_button = NodePath("Center/Panel/Content/AbandonButton")
+ResumeButton = NodePath("Center/Panel/Content/ResumeButton")
+SettingsButton = NodePath("Center/Panel/Content/SettingsButton")
+AbandonButton = NodePath("Center/Panel/Content/AbandonButton")
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1

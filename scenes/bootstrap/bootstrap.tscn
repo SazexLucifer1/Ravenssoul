@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scenes/bootstrap/bootstrap.gd" id="1"]
-[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+[ext_resource type="Script" path="res://scenes/bootstrap/Bootstrap.cs" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/GameButton.cs" id="2"]
 
-[node name="Bootstrap" type="Control" node_paths=PackedStringArray("status_label", "error_panel", "quit_button")]
+[node name="Bootstrap" type="Control" node_paths=PackedStringArray("StatusLabel", "ErrorPanel", "QuitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,9 +11,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-status_label = NodePath("Center/Status")
-error_panel = NodePath("Center/ErrorPanel")
-quit_button = NodePath("Center/ErrorPanel/Content/QuitButton")
+StatusLabel = NodePath("Center/Status")
+ErrorPanel = NodePath("Center/ErrorPanel")
+QuitButton = NodePath("Center/ErrorPanel/Content/QuitButton")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1

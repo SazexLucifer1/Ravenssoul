@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scenes/menus/mission_result/mission_result_screen.gd" id="1"]
-[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+[ext_resource type="Script" path="res://scenes/menus/mission_result/MissionResultScreen.cs" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/GameButton.cs" id="2"]
 
-[node name="MissionResultScreen" type="Control" node_paths=PackedStringArray("title_label", "body_label", "rewards_label", "save_status_label", "continue_button", "retry_button", "save_retry_button")]
+[node name="MissionResultScreen" type="Control" node_paths=PackedStringArray("TitleLabel", "BodyLabel", "RewardsLabel", "SaveStatusLabel", "ContinueButton", "RetryButton", "SaveRetryButton")]
 metadata/automation_id = "screen.result"
 layout_mode = 3
 anchors_preset = 15
@@ -12,13 +12,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-title_label = NodePath("Center/Panel/Content/Title")
-body_label = NodePath("Center/Panel/Content/Body")
-rewards_label = NodePath("Center/Panel/Content/Rewards")
-save_status_label = NodePath("Center/Panel/Content/SaveStatus")
-continue_button = NodePath("Center/Panel/Content/Buttons/ContinueButton")
-retry_button = NodePath("Center/Panel/Content/Buttons/RetryButton")
-save_retry_button = NodePath("Center/Panel/Content/Buttons/SaveRetryButton")
+TitleLabel = NodePath("Center/Panel/Content/Title")
+BodyLabel = NodePath("Center/Panel/Content/Body")
+RewardsLabel = NodePath("Center/Panel/Content/Rewards")
+SaveStatusLabel = NodePath("Center/Panel/Content/SaveStatus")
+ContinueButton = NodePath("Center/Panel/Content/Buttons/ContinueButton")
+RetryButton = NodePath("Center/Panel/Content/Buttons/RetryButton")
+SaveRetryButton = NodePath("Center/Panel/Content/Buttons/SaveRetryButton")
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -87,4 +87,4 @@ custom_minimum_size = Vector2(200, 52)
 layout_mode = 2
 text = "RESULT_CONTINUE"
 script = ExtResource("2")
-busy_text_key = "SAVE_STATUS_SAVING_SHORT"
+BusyTextKey = "SAVE_STATUS_SAVING_SHORT"

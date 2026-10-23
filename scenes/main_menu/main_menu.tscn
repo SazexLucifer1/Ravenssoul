@@ -1,13 +1,13 @@
 [gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1"]
-[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
-[ext_resource type="Script" path="res://core/ui/components/safe_area_container.gd" id="3"]
-[ext_resource type="Script" path="res://core/ui/screens/screen_stack.gd" id="4"]
+[ext_resource type="Script" path="res://scenes/main_menu/MainMenu.cs" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/GameButton.cs" id="2"]
+[ext_resource type="Script" path="res://core/ui/components/SafeAreaContainer.cs" id="3"]
+[ext_resource type="Script" path="res://core/ui/screens/ScreenStack.cs" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/menus/settings/settings_screen.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://core/ui/screens/confirm_dialog.tscn" id="6"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("layout_root", "new_game_button", "continue_button", "settings_button", "quit_button", "version_label", "screen_stack")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("LayoutRoot", "NewGameButton", "ContinueButton", "SettingsButton", "QuitButton", "VersionLabel", "ScreenStack")]
 metadata/automation_id = "screen.main_menu"
 layout_mode = 3
 anchors_preset = 15
@@ -16,15 +16,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-layout_root = NodePath("SafeArea")
-new_game_button = NodePath("SafeArea/Layout/Buttons/NewGameButton")
-continue_button = NodePath("SafeArea/Layout/Buttons/ContinueButton")
-settings_button = NodePath("SafeArea/Layout/Buttons/SettingsButton")
-quit_button = NodePath("SafeArea/Layout/Buttons/QuitButton")
-version_label = NodePath("SafeArea/Layout/Footer/Version")
-screen_stack = NodePath("ScreenStack")
-settings_screen_scene = ExtResource("5")
-confirm_dialog_scene = ExtResource("6")
+LayoutRoot = NodePath("SafeArea")
+NewGameButton = NodePath("SafeArea/Layout/Buttons/NewGameButton")
+ContinueButton = NodePath("SafeArea/Layout/Buttons/ContinueButton")
+SettingsButton = NodePath("SafeArea/Layout/Buttons/SettingsButton")
+QuitButton = NodePath("SafeArea/Layout/Buttons/QuitButton")
+VersionLabel = NodePath("SafeArea/Layout/Footer/Version")
+ScreenStack = NodePath("ScreenStack")
+SettingsScreenScene = ExtResource("5")
+ConfirmDialogScene = ExtResource("6")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -53,7 +53,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3")
-base_margin = 64
+BaseMargin = 64
 
 [node name="Layout" type="VBoxContainer" parent="SafeArea"]
 layout_mode = 2
@@ -87,7 +87,7 @@ layout_mode = 2
 theme_type_variation = &"PrimaryButton"
 text = "MAIN_MENU_CONTINUE"
 script = ExtResource("2")
-busy_text_key = "UI_LOADING_SHORT"
+BusyTextKey = "UI_LOADING_SHORT"
 
 [node name="NewGameButton" type="Button" parent="SafeArea/Layout/Buttons"]
 metadata/automation_id = "main_menu.new_game"
@@ -95,7 +95,7 @@ custom_minimum_size = Vector2(320, 52)
 layout_mode = 2
 text = "MAIN_MENU_NEW_GAME"
 script = ExtResource("2")
-busy_text_key = "UI_LOADING_SHORT"
+BusyTextKey = "UI_LOADING_SHORT"
 
 [node name="SettingsButton" type="Button" parent="SafeArea/Layout/Buttons"]
 metadata/automation_id = "main_menu.settings"

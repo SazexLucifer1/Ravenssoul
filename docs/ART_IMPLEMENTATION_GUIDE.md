@@ -5,7 +5,7 @@ Production rules that keep every asset consistent with
 [VISUAL_QUALITY_RUBRIC.md](VISUAL_QUALITY_RUBRIC.md); motion requirements
 live in [ANIMATION_AND_MOVEMENT.md](ANIMATION_AND_MOVEMENT.md); UI art in
 [UI_STYLE_GUIDE.md](UI_STYLE_GUIDE.md). Engine facts below are enforced by
-tests in `tests/unit/art/` and `tests/unit/combat/test_battle_grid.gd`.
+tests in `tests/unit/art/` and `tests/unit/combat/TestBattleGrid.cs`.
 
 ## 1. Pixel grid and scale
 
@@ -78,7 +78,7 @@ assets/vfx/vfx_<effect>.png
 - Animation names: `<clip>_<dir>` where dir ∈ `se`, `sw`, `ne`, `nw` (only `se` and `ne` drawn; `sw`/`nw` mirror via `flip_h`). Clips listed in ANIMATION_AND_MOVEMENT.md.
 - Import: Texture2D, filter off (project default nearest), mipmaps off, compression **Lossless**, `process/fix_alpha_border` on.
 - Export from Aseprite with `--sheet-type packed --trim` off (keep frame canvas fixed so feet stay anchored).
-- Animation event markers (footstep, impact, release) are authored as Aseprite tags/slices and transferred to AnimationPlayer method tracks (`CharacterAnimator.emit_animation_event`).
+- Animation event markers (footstep, impact, release) are authored as Aseprite tags/slices and transferred to AnimationPlayer method tracks (`CharacterAnimator.EmitAnimationEvent`).
 
 ## 6. Animation principles (summary)
 
@@ -120,4 +120,4 @@ automation protocol reports fps, frame times, node counts, memory).
 - Blurry sprites: texture filter overridden on the node or import; non-integer camera zoom; window size not a multiple of 640×360.
 - Jitter while moving: sub-pixel positions — keep snapping on, tween integer targets (cell centres are integral).
 - Sorting errors: sprite origin not at the feet; y-sort disabled on the parent.
-- Wrong cell picked under the mouse: use `BattleGrid.local_to_cell`; never compute projection elsewhere.
+- Wrong cell picked under the mouse: use `BattleGrid.LocalToCell`; never compute projection elsewhere.

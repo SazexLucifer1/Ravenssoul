@@ -18,7 +18,7 @@ RTL, and pseudolocalization.
 
 ## Consequences
 Translators need the `#. English:` line for context (provided). Key-based
-msgids mean Godot's built-in POT generation isn't used; `extract_keys.gd`
+msgids mean Godot's built-in POT generation isn't used; `ExtractKeys.cs`
 replaces it.
 
 ## Alternatives considered

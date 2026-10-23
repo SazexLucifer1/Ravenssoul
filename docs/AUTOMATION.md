@@ -11,9 +11,9 @@ Development and QA builds only — production builds never start it.
 | Godot server, transports, security | `automation/server/` |
 | Engine adapter (Godot) + game provider (Utopia) | `automation/adapter/` |
 | Approved fixtures | `automation/fixtures/*.json` |
-| Start gate (ships in every build, loads the server by path) | `core/diagnostics/automation_gate.gd` |
+| Start gate (ships in every build, finds the server by type name) | `core/diagnostics/AutomationGate.cs` (+ `IAutomationServer.cs`, the only contract game code knows) |
 | Typed Python client, launcher, CLI, MCP adapter, scenario | `tools/automation/` |
-| Tests | `tests/unit/automation/`, `tests/integration/test_automation_server.gd`, `tools/automation/tests/` |
+| Tests | `tests/unit/automation/`, `tests/integration/TestAutomationServer.cs`, `tools/automation/tests/` |
 | Decisions | ADR 0008 (architecture), ADR 0009 (security model) |
 
 ## Audit summary (what was reused)
@@ -25,7 +25,7 @@ reads them instead of duplicating them:
 |---|---|
 | `SceneRouter` (+ route ids) | scene discovery, transition state, `route.*` events, reset/checkpoint navigation |
 | `ScreenStack` / `UiScreen` / `GameButton` / `FocusChain` | screen discovery, modality (a blocked control is not interactable), focus, button states |
-| `InputMap` actions + `InputMethod` service | raw input goes through `Input.parse_input_event` — the same path as players |
+| `InputMap` actions + `InputMethod` service | raw input goes through `Input.ParseInputEvent` — the same path as players |
 | `GameSession`, `SaveService` (+ `SaveBackend`) | authoritative state, fixtures, checkpoints, isolated automation saves |
 | Content ids (`hero_deserter`, `mission_first_spark`, …) | stable entity ids |
 | Translation keys | language-independent assertions (`text_key`) |
@@ -41,7 +41,7 @@ There was no existing debug console, telemetry, or networking to reuse.
 | Player machine / files | Remote party drives the game or reads files | Server off unless `--automation` is passed **and** the build allows it; binds `127.0.0.1`; no file-access methods; fixtures are shipped ids, never paths; screenshots return bytes (client writes the file) |
 | Localhost from a browser | Malicious web page posts to `127.0.0.1` (CSRF) or uses DNS rebinding | Bearer token required on every RPC; requests with an `Origin` header are rejected; `Host` must be the bound address; WebSocket must authenticate in its first message |
 | Token | Leak via process list / logs / repo | Token passed by environment variable (`UTOPIA_AUTOMATION_TOKEN`) or written to an owner-only `user://automation/session.json`; never logged; constant-time comparison; expires (default 1 h; ≤ 15 min for remote binds) |
-| Game integrity in shipped builds | Automation used as a cheat/exploit channel | Release exports exclude `automation/` (test-enforced); gate refuses release builds without the `automation_qa` feature; `production` profile never starts; no static references from game code (test-enforced) |
+| Game integrity in shipped builds | Automation used as a cheat/exploit channel | Release exports exclude `automation/` from the pack *and* from the C# assembly (`Utopia.csproj` drops `automation/**` in `ExportRelease`; both test-enforced); gate refuses release builds without the `automation_qa` feature; `production` profile never starts; no static references from game code (test-enforced) |
 | Game state | Unrestricted mutation / code execution | Every method maps to a capability checked against the profile; dev mutations are allow-listed (`dev.command` enum), validated (teleport respects walls); **no eval/console execution exists** |
 | Availability | Flooding, huge payloads, slowloris | Token-bucket rate limit (burst 240, 120/s), 64 KiB body / 8 KiB header limits, 5 s read timeout, 16 connection cap, wait timeouts ≤ 120 s |
 | Player data | Leaking private data | No player-identifying data exists; logs redact local paths; state contains ids/numbers only; saves/settings written by automation go to `user://automation/` and are deleted on shutdown |
@@ -219,9 +219,9 @@ Where profiles may run:
 
 | Build | dev | qa | production |
 |---|---|---|---|
-| Editor / debug export (`OS.is_debug_build()`) | ✓ | ✓ | refused |
-| Release export from preset **"Linux QA (automation)"** (`automation_qa` feature) | refused | ✓ | refused |
-| Release export from the Windows/Linux presets | `automation/` not included → refused | refused | refused |
+| Editor / debug export (`OS.IsDebugBuild()`) | ✓ | ✓ | refused |
+| Release export from preset **"Linux QA (automation)"** (`automation_qa` feature; export with the environment variable `UtopiaAutomation=true` so the server is compiled in) | refused | ✓ | refused |
+| Release export from the Windows/Linux presets | server not compiled in → refused | refused | refused |
 
 `protocol.capabilities` reports exactly what the current build grants
 (e.g. no `observe.screenshot` in headless runs), so one client adapts to any
@@ -389,37 +389,38 @@ automation never writes the player's real saves or settings.
 
 - **UI control or screen**: add `metadata/automation_id = "<area>.<name>"` to
   the node in its `.tscn` (screens: `screen.<name>`). Buttons and screens
-  without ids fail `test_every_button_in_shipped_screens_has_an_automation_id`
-  — add new screens to its list.
-- **Game object**: in `UtopiaAutomationProvider.collect()` add
-  `index[id] = {"kind": ..., "provider": self, "node": ...}` with an id derived
-  from content ids, and describe it in `describe()`. Expose only safe,
-  test-relevant properties (no paths, no private data).
+  without ids fail `TestEveryButtonInShippedScreensHasAnAutomationId`
+  (it checks `TestUiLayout.Screens` plus bootstrap) — add new screens there.
+- **Game object**: in `UtopiaAutomationProvider.Collect()` add
+  `index[id] = new IndexEntry("kind", node, this)` with an id derived from
+  content ids, and describe it in `Describe()` (returns a `JsonObject`). Expose
+  only safe, test-relevant properties (no paths, no private data).
 
 ### New semantic action
 
 1. Add the name to the `action` enum in `methods.json` and to
-   `GodotAutomationAdapter.SEMANTIC_ACTIONS` (`true` when supported).
-2. Implement it in a provider's `perform()` by calling the **existing game
-   rule** (like `move` calls `PlayerUnitController.try_step`), returning
+   `GodotAutomationAdapter.SemanticActions` (`true` when supported).
+2. Implement it in a provider's `Perform()` by calling the **existing game
+   rule** (like `move` calls `PlayerUnitController.TryStep`), returning
    `performed:false` + reason for rule rejections and `not_interactable` when
    the game wouldn't let a player do it.
-3. Advertise it in `add_actions()`; add a test and a Python wrapper.
+3. Advertise it in `AddActions()`; add a test and a Python wrapper.
 
 ### New protocol method
 
-Add it to `methods.json` (capability + strict params schema), implement
-`_h_<method_with_underscores>` in `AutomationServer`, add a typed wrapper in
+Add it to `methods.json` (capability + strict params schema), implement a
+handler in `AutomationServer` and register it in the handler table in its
+constructor (`["method.name"] = Handler`), add a typed wrapper in
 `client.py`, regenerate this document's method table
 (`python3 tools/automation/scripts/gen_method_table.py`), and grant the capability
 in `AutomationProfiles`. Tests: `test_every_method_has_a_handler` and the
-Python parity tests enforce the wiring.
+Python parity tests enforce the wiring (`TestEveryMethodHasAHandler`, `test_protocol_parity.py`).
 
 ### New scene
 
 Register the route as usual; give its controls/screens `automation_id`s. If
-it has game objects, extend the provider (`is_gameplay`-style detection on
-public fields, `hook_scene()` to emit events from its signals).
+it has game objects, extend the provider (`AsGameplay`-style detection by
+scene type, `HookScene()` to emit events from its signals).
 
 ### New engine adapter
 
@@ -452,6 +453,6 @@ identifies it).
 - No pixel-diffing of screenshots; no video recording (recordings are command/event logs).
 - `checkpoint`s capture campaign state + route only, not mid-mission positions.
 - `interact`, `equip`, `use`, `choose_dialogue` are declared but unsupported until those systems exist.
-- The release-export exclusion is verified on the preset configuration, not by building exports (no export templates in CI).
+- The release-export exclusion is verified on the preset configuration and the project file, not by building exports (no export templates in CI).
 - Remote device testing (`--automation-bind` + `--automation-allow-remote`) has
   no TLS; use it only on trusted networks or through an SSH tunnel.

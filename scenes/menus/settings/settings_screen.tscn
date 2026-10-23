@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scenes/menus/settings/settings_screen.gd" id="1"]
-[ext_resource type="Script" path="res://core/ui/components/game_button.gd" id="2"]
+[ext_resource type="Script" path="res://scenes/menus/settings/SettingsScreen.cs" id="1"]
+[ext_resource type="Script" path="res://core/ui/components/GameButton.cs" id="2"]
 
-[node name="SettingsScreen" type="Control" node_paths=PackedStringArray("language_option", "text_size_option", "reduced_motion_toggle", "back_button")]
+[node name="SettingsScreen" type="Control" node_paths=PackedStringArray("LanguageOption", "TextSizeOption", "ReducedMotionToggle", "BackButton")]
 metadata/automation_id = "screen.settings"
 layout_mode = 3
 anchors_preset = 15
@@ -12,10 +12,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-language_option = NodePath("Center/Panel/Content/Grid/LanguageOption")
-text_size_option = NodePath("Center/Panel/Content/Grid/TextSizeOption")
-reduced_motion_toggle = NodePath("Center/Panel/Content/Grid/ReducedMotionToggle")
-back_button = NodePath("Center/Panel/Content/BackButton")
+LanguageOption = NodePath("Center/Panel/Content/Grid/LanguageOption")
+TextSizeOption = NodePath("Center/Panel/Content/Grid/TextSizeOption")
+ReducedMotionToggle = NodePath("Center/Panel/Content/Grid/ReducedMotionToggle")
+BackButton = NodePath("Center/Panel/Content/BackButton")
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1

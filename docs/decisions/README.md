@@ -15,6 +15,7 @@ One file per decision: `NNNN-short-title.md`. Never delete; mark as
 | [0008](0008-remote-automation-architecture.md) | Remote automation: JSON-RPC protocol, engine adapter, opt-in server | Accepted |
 | [0009](0009-automation-security-model.md) | Automation security model | Accepted |
 | [0010](0010-isometric-battles-and-pixel-scale.md) | Isometric battles, 640×360 pixel art frame, integer scaling | Accepted |
+| [0011](0011-csharp.md) | C# (.NET 8) instead of GDScript; release builds compile out automation and tests | Accepted |
 
 ## Template
 

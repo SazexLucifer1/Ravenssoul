@@ -1,0 +1,22 @@
+<Project Sdk="Godot.NET.Sdk/4.6.0">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>Utopia</RootNamespace>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <!--
+    Release exports must not contain the remote automation server or the tests
+    (docs/AUTOMATION.md, ADR 0009 and 0011). Godot compiles every .cs file into
+    one assembly, so they are removed here; export presets additionally exclude
+    the non-code files. QA exports opt back in by setting the UtopiaAutomation=true environment variable (see docs/AUTOMATION.md).
+  -->
+  <ItemGroup Condition="'$(Configuration)' == 'ExportRelease' and '$(UtopiaAutomation)' != 'true'">
+    <Compile Remove="automation/**" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'ExportRelease'">
+    <Compile Remove="tests/**" />
+  </ItemGroup>
+</Project>

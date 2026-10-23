@@ -14,21 +14,20 @@ config/name="Utopia"
 config/description="Tactical, card-driven revolution RPG."
 config/version="0.1.0"
 run/main_scene="res://scenes/bootstrap/bootstrap.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Settings="*res://autoload/settings_service.gd"
-InputMethod="*res://autoload/input_method_service.gd"
-SaveService="*res://autoload/save_service.gd"
-GameSession="*res://autoload/game_session.gd"
-SceneRouter="*res://autoload/scene_router.gd"
+Settings="*res://autoload/SettingsService.cs"
+InputMethod="*res://autoload/InputMethodService.cs"
+SaveService="*res://autoload/SaveService.cs"
+GameSession="*res://autoload/GameSession.cs"
+SceneRouter="*res://autoload/SceneRouter.cs"
 
-[debug]
+[dotnet]
 
-gdscript/warnings/untyped_declaration=1
-gdscript/warnings/unsafe_call_argument=0
+project/assembly_name="Utopia"
 
 [display]
 

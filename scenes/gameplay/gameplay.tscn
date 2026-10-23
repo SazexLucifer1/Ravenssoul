@@ -1,29 +1,29 @@
 [gd_scene load_steps=12 format=3]
 
-[ext_resource type="Script" path="res://scenes/gameplay/gameplay.gd" id="1"]
+[ext_resource type="Script" path="res://scenes/gameplay/Gameplay.cs" id="1"]
 [ext_resource type="PackedScene" path="res://features/characters/character.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/menus/pause/pause_menu.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/menus/settings/settings_screen.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/menus/mission_result/mission_result_screen.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://core/ui/screens/confirm_dialog.tscn" id="6"]
-[ext_resource type="Script" path="res://features/combat/grid/battle_grid.gd" id="7"]
-[ext_resource type="Script" path="res://features/combat/player_unit_controller.gd" id="8"]
+[ext_resource type="Script" path="res://features/combat/grid/BattleGrid.cs" id="7"]
+[ext_resource type="Script" path="res://features/combat/PlayerUnitController.cs" id="8"]
 [ext_resource type="PackedScene" path="res://scenes/gameplay/hud/hud.tscn" id="9"]
-[ext_resource type="Script" path="res://core/ui/screens/screen_stack.gd" id="10"]
+[ext_resource type="Script" path="res://core/ui/screens/ScreenStack.cs" id="10"]
 
-[node name="Gameplay" type="Node" node_paths=PackedStringArray("grid", "units_root", "camera", "controller", "hud", "screen_stack")]
+[node name="Gameplay" type="Node" node_paths=PackedStringArray("Grid", "UnitsRoot", "Camera", "Controller", "Hud", "ScreenStack")]
 script = ExtResource("1")
-character_scene = ExtResource("2")
-pause_menu_scene = ExtResource("3")
-settings_screen_scene = ExtResource("4")
-result_screen_scene = ExtResource("5")
-confirm_dialog_scene = ExtResource("6")
-grid = NodePath("World/BattleGrid")
-units_root = NodePath("World/BattleGrid/Units")
-camera = NodePath("World/Camera2D")
-controller = NodePath("PlayerUnitController")
-hud = NodePath("Hud")
-screen_stack = NodePath("UiLayer/ScreenStack")
+CharacterScene = ExtResource("2")
+PauseMenuScene = ExtResource("3")
+SettingsScreenScene = ExtResource("4")
+ResultScreenScene = ExtResource("5")
+ConfirmDialogScene = ExtResource("6")
+Grid = NodePath("World/BattleGrid")
+UnitsRoot = NodePath("World/BattleGrid/Units")
+Camera = NodePath("World/Camera2D")
+Controller = NodePath("PlayerUnitController")
+Hud = NodePath("Hud")
+ScreenStack = NodePath("UiLayer/ScreenStack")
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -48,9 +48,9 @@ y_sort_enabled = true
 [node name="Camera2D" type="Camera2D" parent="World"]
 zoom = Vector2(2, 2)
 
-[node name="PlayerUnitController" type="Node" parent="." node_paths=PackedStringArray("grid")]
+[node name="PlayerUnitController" type="Node" parent="." node_paths=PackedStringArray("Grid")]
 script = ExtResource("8")
-grid = NodePath("../World/BattleGrid")
+Grid = NodePath("../World/BattleGrid")
 
 [node name="Hud" parent="." instance=ExtResource("9")]
 

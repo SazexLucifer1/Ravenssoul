@@ -27,8 +27,8 @@ class ProtocolParityTest(unittest.TestCase):
         self.assertFalse(called - set(METHODS["methods"]))
 
     def test_error_codes_match_godot_constants(self):
-        gd = (REPO / "automation/protocol/automation_protocol.gd").read_text()
-        godot_codes = {int(v) for v in re.findall(r"const [A-Z_]+: int = (-32\d{3})", gd)}
+        source = (REPO / "automation/protocol/AutomationProtocol.cs").read_text()
+        godot_codes = {int(v) for v in re.findall(r"const int \w+ = (-32\d{3});", source)}
         python_codes = set(errors._BY_CODE)
         self.assertEqual(godot_codes - {-32700, -32603}, python_codes)
 

@@ -16,14 +16,14 @@ decide what was hit. The grid decides; visuals show the result.
 | Item from the checklist | Needed? | Approach |
 |---|---|---|
 | CharacterBody movement shapes | No | Units are `Node2D` on cells |
-| StaticBody / AnimatableBody world collision | No | Blocked cells in `BattleMapData.blocked_cells` |
-| Area interaction & hurtbox triggers | No (gameplay) | Cell queries: `BattleGrid.occupant_at`, hazards via `is_hazard` |
-| Temporary attack hitboxes | No | Card `range_tiles` + target cell validation (planned in card resolution) |
+| StaticBody / AnimatableBody world collision | No | Blocked cells in `BattleMapData.BlockedCells` |
+| Area interaction & hurtbox triggers | No (gameplay) | Cell queries: `BattleGrid.OccupantAt`, hazards via `IsHazard` |
+| Temporary attack hitboxes | No | Card `RangeTiles` + target cell validation (planned in card resolution) |
 | RayCast/ShapeCast aim and projectiles | No | Line-of-sight on the grid (Bresenham over cells) when ranged cards need it |
 | Vehicles, moving platforms, doors, dynamic props | Doors/props later | Cell flags/occupants changed by interaction rules |
 | Ragdolls, cloth | No | Cosmetic shaders only |
 | Static-world surfaces (terrain) | Yes | Per-cell terrain data (planned: movement cost, cover) |
-| Pointer picking (mouse selects a cell/unit) | Yes, soon | `BattleGrid.local_to_cell(get_local_mouse_position())` — no physics query needed. Layer `pointer_pick` (4) is reserved if a physics pick is ever required |
+| Pointer picking (mouse selects a cell/unit) | Yes, soon | `BattleGrid.LocalToCell(GetLocalMousePosition())` — no physics query needed. Layer `pointer_pick` (4) is reserved if a physics pick is ever required |
 
 Collision layer names are reserved in `project.godot`
 (`world`, `units`, `interactables`, `pointer_pick`) for future cosmetic or
@@ -33,8 +33,8 @@ proposed, it needs an ADR explaining why grid math is insufficient.
 ## Isometric projection
 
 Battles are drawn isometrically (ADR 0010) but all rules stay in integer
-cell space. `BattleGrid.cell_to_local` (cell → 2:1 diamond centre, 32×16 art
-px) and `BattleGrid.local_to_cell` (inverse, used for pointer picking) are
+cell space. `BattleGrid.CellToLocal` (cell → 2:1 diamond centre, 32×16 art
+px) and `BattleGrid.LocalToCell` (inverse, used for pointer picking) are
 the only projection code; tests check the round trip for every cell and
 that points inside a diamond pick that cell. Units are y-sorted by their
 cell centre for correct overlap.
@@ -42,9 +42,9 @@ cell centre for correct overlap.
 ## Rules
 
 - **Source of truth**: `BattleGrid` occupancy + `BattleMapData`. Visual
-  position is derived from cell (`cell_to_local`).
+  position is derived from cell (`CellToLocal`).
 - **Swept checks / tunneling**: a move is a sequence of single orthogonal
-  steps, each validated (`PlayerUnitController.try_step` rejects multi-cell
+  steps, each validated (`PlayerUnitController.TryStep` rejects multi-cell
   and diagonal deltas). Multi-tile card moves must call it per step, so
   walls can never be skipped regardless of frame rate.
 - **One hit per window**: an effect resolves once per application. Hazards
